@@ -55,5 +55,5 @@ Minden mappában generálódik egy BUILD.txt fájl, amely a rendszer használat�
 == Feedback 
 
 Ha akármilyen probléma merül fel, akkor a bodand@proton.me címen próbálok mihamarabb 
-segítséget nyújtani, illetve a JPort email rendszerében, bár előbbi preferált.
+segítséget nyújtani, illetve a JPorta email rendszerében, bár előbbi preferált.
 
