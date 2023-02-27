@@ -458,7 +458,7 @@ index fd63e2d..0000000
 --- a/CPPSwap.vcxproj.filters
 +++ /dev/null
 @@ -1,35 +0,0 @@
--<?xml version="1.0" encoding="utf-8"?>
+-﻿<?xml version="1.0" encoding="utf-8"?>
 -<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 -  <ItemGroup>
 -    <Filter Include="Source Files">
@@ -500,7 +500,7 @@ index be25078..0000000
 --- a/CPPSwap.vcxproj.user
 +++ /dev/null
 @@ -1,4 +0,0 @@
--<?xml version="1.0" encoding="utf-8"?>
+-﻿<?xml version="1.0" encoding="utf-8"?>
 -<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 -  <PropertyGroup />
 -</Project>
@@ -511,7 +511,7 @@ index 0000000..45254df
 --- /dev/null
 +++ b/HSZK-VS16/ALL_BUILD.vcxproj
 @@ -0,0 +1,185 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -703,7 +703,7 @@ index 0000000..dccdabf
 --- /dev/null
 +++ b/HSZK-VS16/ALL_BUILD.vcxproj.filters
 @@ -0,0 +1,8 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt" />
@@ -717,7 +717,7 @@ index 0000000..4150b85
 --- /dev/null
 +++ b/HSZK-VS16/ZERO_CHECK.vcxproj
 @@ -0,0 +1,171 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -895,7 +895,7 @@ index 0000000..42e6080
 --- /dev/null
 +++ b/HSZK-VS16/ZERO_CHECK.vcxproj.filters
 @@ -0,0 +1,13 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <CustomBuild Include="$(ProjectDir)\..\HSZK-VS16\CMakeFiles\a24d52d93181d9882c1a681a0abf8e09\generate.stamp.rule">
@@ -914,7 +914,7 @@ index 0000000..60dde4d
 --- /dev/null
 +++ b/HSZK-VS16/cpp_ell_cppswap.sln
 @@ -0,0 +1,68 @@
-+
++﻿
 +Microsoft Visual Studio Solution File, Format Version 12.00
 +# Visual Studio Version 16
 +Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{84F6B31D-67B7-38E7-9F06-73F20AF248C9}"
@@ -988,7 +988,7 @@ index 0000000..419f99c
 --- /dev/null
 +++ b/HSZK-VS16/cppswap.vcxproj
 @@ -0,0 +1,348 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -1343,7 +1343,7 @@ index 0000000..ea31230
 --- /dev/null
 +++ b/HSZK-VS16/cppswap.vcxproj.filters
 @@ -0,0 +1,30 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <ClCompile Include="$(ProjectDir)\..\swap.cpp">
@@ -1379,7 +1379,7 @@ index 0000000..cb6d376
 --- /dev/null
 +++ b/HSZK-VS16/memtrace.vcxproj
 @@ -0,0 +1,270 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -1656,7 +1656,7 @@ index 0000000..55263dd
 --- /dev/null
 +++ b/HSZK-VS16/memtrace.vcxproj.filters
 @@ -0,0 +1,24 @@
-+<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <ClCompile Include="$(ProjectDir)\..\memtrace.cpp">
@@ -1715,7 +1715,7 @@ index a66a345..0ef68d1 100644
 @@ -82,7 +82,7 @@ Szeber
  	#define THROW_NOTHING
    #else
-     // C++11 vagy �jabb
+     // C++11 vagy �jabb
 -	#define THROW_BADALLOC noxcept(false)
 +	#define THROW_BADALLOC noexcept(false)
  	#define THROW_NOTHING noexcept
