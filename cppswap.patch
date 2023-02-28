@@ -3,7 +3,7 @@ new file mode 100644
 index 0000000..128ce95
 --- /dev/null
 +++ b/BUILD.txt
-@@ -0,0 +1,94 @@
+@@ -0,0 +1,103 @@
 +A projekt egy CMake projektet tartalmaz, ami a különféle források fordításának menetét kezeli.
 +CMake nem fordít, csak generál olyan projekteket, amelyek képesek az adott gépen a megfelelő
 +fordítóval fordulni.
@@ -11,99 +11,102 @@ index 0000000..128ce95
 +Használati utasítás:
 +
 +- Parancssorból:
-+  Parancssorból direktben a CMake program segítéségével kezelhető a projekt, ehhez
++  Parancssorból direktben a CMake program segítéségével kezelheto a projekt, ehhez
 +  be kell lépni a projekt mappájába.
-+
++  
 +  Megjegyzés:
-+    A HSZK-s gépeken ehhez az opcióhoz a "Developer Command Prompt For VS 2019" parancssort
++    A HSZK-s gépeken ehhez az opcióhoz a "Developer Command Prompt For VS 2019" parancssort 
 +    kell használni.
-+
++  
 +  1. A projekt konfigurálása a jelenlegi gépre:
-+
++    
 +    cmake -S . -B _build
-+
++    
 +  2. A projekt fordítása:
-+
++   
 +    cmake --build _build
-+
-+  Megjegyzés:
++    
++  Megjegyzés: 
 +    A CMake által használt "Generátor", azaz az a program, amelyik a tényleges fordítást hajtja végre,
 +    platformfüggő.
-+    Windowson ha talál Visual Studio-t, akkor a Visual Studio-hoz tartozó MSBuild-et fogja
++    Windowson ha talál Visual Studio-t, akkor a Visual Stuido-hoz tartozó MSBuild-et fogja 
 +    használni, de Linuxon például GNU Make szokott lenni egy jó megoldás.
-+    Ha felül szeretnénk írni ezt a választását, akkor a -G kapcsolóval lehet megtenni.
++    Ha felül szeretnénk írni ezt a választását, akkor a -G kapcsolóval lehet megtenni. 
 +    (A cmake --help parancs kilistázza az összes érvényes generátor nevet.)
-+
++  
 +- Visual Studio 2019 (HSZK):
-+  Alapvetően biztosítunk a laborhoz egy VS 2019 solution fájlt, ami a HSZK-beli jogosultság problémákat
++  Alapvetoen biztosítunk a laborhoz egy VS 2019 solution fájlt, ami a HSZK-beli jogosultság problémákat
 +  próbálja orvosolni.
-+
-+  Ennek használatához szimplán a HSZK-VS16 mappában található solution (.sln) fájlt kell megnyitni, és
++  
++  Ennek használatához szimplán a HSZK-VS16 mappában található solution (.sln) fájlt kell megnyitni, és 
 +  működni fog a Visual Studio környezet.
-+
++  
 +  Fontos:
-+    Lehetséges, hogy nem a megfelelő projekt kerül kijelölésre alapból, hanem a CMake által generált
++    Lehetséges, hogy nem a megfelelő projekt kerül kijelölésre alapból, hanem a CMake által generált 
 +    `ALL_BUILD'. (Ilyenkor a futtatás nem fog sikerülni.)
 +    Ezt orvoslása a következő:
 +      A jelenlegi projekt kiválasztása > Jobb-click > `Set as startup project'.
 +    A mindenkori laborfeladat a használandó projekt, pl. első labor esetén ez a `nagyobb'.
 +    Visual Studio ilyen néven fog exe-t generálni, a projektből.
-+
++  
 +  Megjegyzés:
 +    Ez egy kézzel módosított CMake által generált solution/projekt fájl, úgyhogy jóval több projekt
 +    jelenik meg benne, mint egy manuálisan készült VS solutionben. Ez nem baj.
-+
++  
 +- Visual Studio 2019/2022 (Otthoni):
-+  A modernebb Visual Studio verziók képesek natívan kezelni CMake projekteket, nem kell nekik explicité
++  A modernebb Visual Studio verziók képesek natívan kezelni CMake projekteket, nem kell nekik explicite
 +  legenerálni a saját formátumukba a projekt fájlokat.
-+
-+  Ehhez el kell indítani Visual Studio-t és a `File > Open > Folder...` opcióval kiválasztani a
-+  megfelelő mappát (amiben a CMakeLists.txt fájl lakik) és minden megtörténik automatikusan.
-+
++  
++  Ehhez el kell indítani Visual Studio-t és a `File > Open > Folder...` opcióval kiválasztani a 
++  megfelelo mappát (amiben a CMakeLists.txt fájl lakik) és minden megtörténik automatikusan.
++  
 +  Megjegyzés:
 +    A HSZK-ban telepített gépeken ez a megoldás nem fog működni, mert a VS-hez szükséges script
 +    nem rendelkezik elegendő jogosultsággal a Windows Registry módosítására.
-+
++    
 +- CLion (nincs HSZK-ban):
-+  CLion natívan CMake-t használ projekt kezelésre, egyszerűen csak az `File > Open` menüben meg kell nyitni a
++  CLion natívan CMake-t használ projekt kezelésre, egyszerűen csak az `File > Open` menüben meg kell nyitni a 
 +  mappát, és a felugró ablakban az OK gombot megnyomni.
 +
 +- Visual Studio Code:
 +  Visual Studio Code is képes CMake projekteket kezelni, ehhez a `ms-vscode.cpptools-extension-pack'
 +  extensiont kell telepíteni.
-+
++  
 +  1. A mappa megnyitása:
-+
++  
 +    `File > Open Folder...`
-+
-+  2. Megkérdezi, hogy a CMake projektet konfigurálja-e be. Erre 'Igen'-t kell válaszolni, és
++    
++  2. Megkérdezi, hogy a CMake projektet konfigurálja-e be. Erre 'Igen'-t kell válaszolni, és 
 +     kiválasztani a MinGW fordítót.
-+
-+    Megjegyzés:
-+      Saját gépen lehetséges másik fordítókat is használni, a hivatalos Microsoft által
++     
++    Megjegyzés: 
++      Saját gépen lehetséges másik fordítókat is használni, a hivatalos Microsoft által 
 +      biztosított dokumentáció lépései szerint érdemes ezeket bekonfigurálni.
 +      Akár Windowson, akár UNIX leszármazottakon is ugyan ez a folyamat érvényes, esetleg
 +      érdemes a hivatalos dokumentációt elolvasni.
-+
-+  3. `Ctrl-F5' billentyűvel lehetséges fordítani/debugolni a projektet.
-+
-+  A HSZK-s gépeken ez után a GCC 8.1.0 fordítóval képes fordítani a rendszer, MSVC nem
-+  lett még ellenőrizve.
-+
++  
++  3. `F5' billentyuvel lehetséges fordítani/debugolni a projektet.
++    
++    Megjegyzés:
++      A HSZK-s gépeken a GDB/LLDB opciót kell kiválasztani, ha megkérdezi; A Windows opció 
++      Visual C++ fordító használatára van.
++  
++  A HSZK-s gépeken ez után a GCC 8.1.0 fordítóval képes fordítani a rendszer.
++  
 +- Code::Blocks:
 +  Code::Blocks nem képes natívan CMake projekteket kezelni.
-+
-+  A Code::Blocks projektfájlok sajátossága miatt, ezt a fájl és a hozzá tartozó Makefile teljes
++  
++  A Code::Blocks projektfájlok sajátossága miatt, ezt a fájl és a hozzá tartozó Makefile teljes 
 +  elérési útvonalakat tartalmaznak, így nem tudjuk őket előre elkészíteni.
 +  Ehhez a következő parancs használható, abban a mappában, amelyikben a CMakeLists.txt fájl található:
-+
++      
 +    cmake -G "CodeBlocks - MinGW Makefiles" -S. -B CB-Build-Directory
-+
++  
 +  Megjegyzés:
-+    A biztosított C::B fájl, még egy régebbi verzió, amelyik a régi projekthez tartozott, és nem a
++    A biztosított C::B fájl, még egy régebbi verzió, amelyik a régi projekthez tartozott, és nem a 
 +    CMake fájlból lett generálva, és nem rendelkezik mindennel, amivel a CMake projekt igen, például
 +    különféle fordítási kapcsolók, amelyek a hibakeresést teszik könnyebbé.
-+
++  
 \ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
@@ -1712,7 +1715,7 @@ index a66a345..0ef68d1 100644
 @@ -82,7 +82,7 @@ Szeber
  	#define THROW_NOTHING
    #else
-     // C++11 vagy �jabb
+     // C++11 vagy �jabb
 -	#define THROW_BADALLOC noxcept(false)
 +	#define THROW_BADALLOC noexcept(false)
  	#define THROW_NOTHING noexcept
