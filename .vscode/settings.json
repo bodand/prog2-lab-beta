@@ -1,0 +1,18 @@
+{
+  "spellright.language": [
+    "en",
+    "hu"
+  ],
+  "spellright.documentTypes": [
+    "markdown",
+    "latex",
+    "plaintext",
+    "asciidoc",
+    "diff"
+  ],
+  "spellright.parserByClass": {
+    "diff": {
+      "parser": "plain"
+    }
+  }
+}
