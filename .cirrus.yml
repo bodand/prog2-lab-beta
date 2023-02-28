@@ -41,7 +41,7 @@ unix_like_task:
         TEST_FILE: sh ci/test-patch.sh
     - name: "FreeBSD 14.0"
       freebsd_instance:
-        image_family: freebsd-14-0
+        image_family: freebsd-14-0-snap
       env:
         TEST_FILE: sh ci/test-patch.sh
     # Mac OSX ###################################
