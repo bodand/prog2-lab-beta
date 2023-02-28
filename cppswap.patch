@@ -98,7 +98,13 @@ index 0000000..128ce95
 +  Ehhez a következő parancs használható, abban a mappában, amelyikben a CMakeLists.txt fájl található:
 +
 +    cmake -G "CodeBlocks - MinGW Makefiles" -S. -B CB-Build-Directory
-
++
++  Megjegyzés:
++    A biztosított C::B fájl, még egy régebbi verzió, amelyik a régi projekthez tartozott, és nem a
++    CMake fájlból lett generálva, és nem rendelkezik mindennel, amivel a CMake projekt igen, például
++    különféle fordítási kapcsolók, amelyek a hibakeresést teszik könnyebbé.
++
+\ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
 index 0000000..e4b8c07
