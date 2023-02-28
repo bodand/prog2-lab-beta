@@ -41,7 +41,7 @@ mutatjuk be, ami működik Windowson is.
 
 [source,bash]
 ----
-$ git apply --reject --ignore-space-change --ignore-whitespace --whitespace=fix <patch-file>
+git apply --reject --ignore-space-change --ignore-whitespace --whitespace=fix <patch-file>
 ----
 
 Ez a folyamat generál egy új CMakeLists.txt fájlt a mappában, amelyet lehet használni
