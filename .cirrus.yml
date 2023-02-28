@@ -4,6 +4,8 @@ unix_like_task:
     - name: "Debian Bookworm"
       container:
         image: debian:bookworm-slim
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -12,6 +14,8 @@ unix_like_task:
     - name: "Debian Bullseye"
       container: 
         image: debian:bullseye-slim
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -20,6 +24,8 @@ unix_like_task:
     - name: "Debian testing"
       container: 
         image: debian:testing-slim
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -29,6 +35,8 @@ unix_like_task:
     - name: "Fedora latest"
       container:
         image: fedora:latest
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -37,6 +45,8 @@ unix_like_task:
     - name: "Alpine latest"
       container:
         image: alpine:latest
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -44,6 +54,8 @@ unix_like_task:
     - name: "Alpine edge"
       container:
         image: alpine:edge
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -52,6 +64,8 @@ unix_like_task:
     - name: "FreeBSD 13.1"
       freebsd_instance:
         image_family: freebsd-13-1
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
@@ -59,6 +73,8 @@ unix_like_task:
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0-snap
+        cpu: 1
+        memory: 1G
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
