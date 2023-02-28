@@ -66,14 +66,12 @@ windows_task:
     - name: "Windows Server Core 2019"
       windows_container:
         image: cirrusci/windowsservercore:2019
-      env:
-        TEST_FILE: ci\test-patch.bat
 
   cppswap_script:
-    - %TEST_FILE% https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
   
   lab_01_script:
-    - %TEST_FILE% https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
   
   nem_oo_script:
-    - %TEST_FILE% https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
