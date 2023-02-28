@@ -1,4 +1,6 @@
-= A programozás alapjai 2
+= A programozás alapjai 2 labor beta
+
+image:https://badgen.net/github/checks/bodand/prog2-lab-beta/trunk[]
 
 A programozás alapjai 2 tárgy laborjainak új cmake alapú szervezésének béta verziója.
 
