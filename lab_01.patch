@@ -1,131 +1,123 @@
 diff --git a/BUILD.txt b/BUILD.txt
 new file mode 100644
-index 0000000..a7fa1e4
+index 0000000..5ab7b14
 --- /dev/null
 +++ b/BUILD.txt
-@@ -0,0 +1,102 @@
-+A projekt egy CMake projektet tartalmaz, ami a k├╝l├Ânf├ęle forr├ísok ford├şt├ís├ínak menet├ęt kezeli.
-+CMake nem ford├şt, csak gener├íl olyan projekteket, amelyek k├ępesek az adott g├ępen a megfelel┼Ĺ
-+ford├şt├│val fordulni.
+@@ -0,0 +1,94 @@
++A projekt egy CMake projektet tartalmaz, ami a különféle források fordításának menetét kezeli.
++CMake nem fordít, csak generál olyan projekteket, amelyek képesek az adott gépen a megfelelő
++fordítóval fordulni.
 +
-+Haszn├ílati utas├şt├ís:
++Használati utasítás:
 +
-+- Parancssorb├│l:
-+  Parancssorb├│l direktben a CMake program seg├şt├ęs├ęg├ęvel kezelheto a projekt, ehhez
-+  be kell l├ępni a projekt mapp├íj├íba.
++- Parancssorból:
++  Parancssorból direktben a CMake program segítéségével kezelheto a projekt, ehhez
++  be kell lépni a projekt mappájába.
 +
-+  Megjegyz├ęs:
-+    A HSZK-s g├ępeken ehhez az opci├│hoz a "Developer Command Prompt For VS 2019" parancssort
-+    kell haszn├ílni.
++  Megjegyzés:
++    A HSZK-s gépeken ehhez az opcióhoz a "Developer Command Prompt For VS 2019" parancssort
++    kell használni.
 +
-+  1. A projekt konfigur├íl├ísa a jelenlegi g├ępre:
++  1. A projekt konfigurálása a jelenlegi gépre:
 +
 +    cmake -S . -B _build
 +
-+  2. A projekt ford├şt├ísa:
++  2. A projekt fordítása:
 +
 +    cmake --build _build
 +
-+  Megjegyz├ęs:
-+    A CMake ├íltal haszn├ílt "Gener├ítor", azaz az a program, amelyik a t├ęnyleges ford├şt├íst hajtja v├ęgre,
-+    platformf├╝gg┼Ĺ.
-+    Windowson ha tal├íl Visual Studio-t, akkor a Visual Stuido-hoz tartoz├│ MSBuild-et fogja
-+    haszn├ílni, de Linuxon p├ęld├íul GNU Make szokott lenni egy j├│ megold├ís.
-+    Ha fel├╝l szeretn├ęnk ├şrni ezt a v├ílaszt├ís├ít, akkor a -G kapcsol├│val lehet megtenni.
-+    (A cmake --help parancs kilist├ízza az ├Âsszes ├ęrv├ęnyes gener├ítor nevet.)
++  Megjegyzés:
++    A CMake által használt "Generátor", azaz az a program, amelyik a tényleges fordítást hajtja végre,
++    platformfüggő.
++    Windowson ha talál Visual Studio-t, akkor a Visual Stuido-hoz tartozó MSBuild-et fogja
++    használni, de Linuxon például GNU Make szokott lenni egy jó megoldás.
++    Ha felül szeretnénk írni ezt a választását, akkor a -G kapcsolóval lehet megtenni.
++    (A cmake --help parancs kilistázza az összes érvényes generátor nevet.)
 +
 +- Visual Studio 2019 (HSZK):
-+  Alapvetoen biztos├ştunk a laborhoz egy VS 2019 solution f├íjlt, ami a HSZK-beli jogosults├íg probl├ęm├íkat
-+  pr├│b├ílja orvosolni.
++  Alapvetoen biztosítunk a laborhoz egy VS 2019 solution fájlt, ami a HSZK-beli jogosultság problémákat
++  próbálja orvosolni.
 +
-+  Ennek haszn├ílat├íhoz szimpl├ín a HSZK-VS16 mapp├íban tal├ílhat├│ solution (.sln) f├íjlt kell megnyitni, ├ęs
-+  m┼▒k├Âdni fog a Visual Studio k├Ârnyezet.
++  Ennek használatához szimplán a HSZK-VS16 mappában található solution (.sln) fájlt kell megnyitni, és
++  működni fog a Visual Studio környezet.
 +
 +  Fontos:
-+    Lehets├ęges, hogy nem a megfelel┼Ĺ projekt ker├╝l kijel├Âl├ęsre alapb├│l, hanem a CMake ├íltal gener├ílt
-+    `ALL_BUILD'. (Ilyenkor a futtat├ís nem fog siker├╝lni.)
-+    Ezt orvosl├ísa a k├Âvetkez┼Ĺ:
-+      A jelenlegi projekt kiv├ílaszt├ísa > Jobb-click > `Set as startup project'.
-+    A mindenkori laborfeladat a haszn├íland├│ projekt, pl. els┼Ĺ labor eset├ęn ez a `nagyobb'.
-+    Visual Studio ilyen n├ęven fog exe-t gener├ílni, a projektb┼Ĺl.
++    Lehetséges, hogy nem a megfelelő projekt kerül kijelölésre alapból, hanem a CMake által generált
++    `ALL_BUILD'. (Ilyenkor a futtatás nem fog sikerülni.)
++    Ezt orvoslása a következő:
++      A jelenlegi projekt kiválasztása > Jobb-click > `Set as startup project'.
++    A mindenkori laborfeladat a használandó projekt, pl. első labor esetén ez a `nagyobb'.
++    Visual Studio ilyen néven fog exe-t generálni, a projektből.
 +
-+  Megjegyz├ęs:
-+    Ez egy k├ęzzel m├│dos├ştott CMake ├íltal gener├ílt solution/projekt f├íjl, ├║gyhogy j├│val t├Âbb projekt
-+    jelenik meg benne, mint egy manu├ílisan k├ęsz├╝lt VS solutionben. Ez nem baj.
++  Megjegyzés:
++    Ez egy kézzel módosított CMake által generált solution/projekt fájl, úgyhogy jóval több projekt
++    jelenik meg benne, mint egy manuálisan készült VS solutionben. Ez nem baj.
 +
 +- Visual Studio 2019/2022 (Otthoni):
-+  A modernebb Visual Studio verzi├│k k├ępesek nat├şvan kezelni CMake projekteket, nem kell nekik explicite
-+  legener├ílni a saj├ít form├ítumukba a projekt f├íjlokat.
++  A modernebb Visual Studio verziók képesek natívan kezelni CMake projekteket, nem kell nekik explicite
++  legenerálni a saját formátumukba a projekt fájlokat.
 +
-+  Ehhez el kell ind├ştani Visual Studio-t ├ęs a `File > Open > Folder...` opci├│val kiv├ílasztani a
-+  megfelelo mapp├ít (amiben a CMakeLists.txt f├íjl lakik) ├ęs minden megt├Ârt├ęnik automatikusan.
++  Ehhez el kell indítani Visual Studio-t és a `File > Open > Folder...` opcióval kiválasztani a
++  megfelelo mappát (amiben a CMakeLists.txt fájl lakik) és minden megtörténik automatikusan.
 +
-+  Megjegyz├ęs:
-+    A HSZK-ban telep├ştett g├ępeken ez a megold├ís nem fog m┼▒k├Âdni, mert a VS-hez sz├╝ks├ęges script
-+    nem rendelkezik elegend┼Ĺ jogosults├íggal a Windows Registry m├│dos├şt├ís├íra.
++  Megjegyzés:
++    A HSZK-ban telepített gépeken ez a megoldás nem fog működni, mert a VS-hez szükséges script
++    nem rendelkezik elegendő jogosultsággal a Windows Registry módosítására.
 +
 +- CLion (nincs HSZK-ban):
-+  CLion nat├şvan CMake-t haszn├íl projekt kezel├ęsre, egyszer┼▒en csak az `File > Open` men├╝ben meg kell nyitni a
-+  mapp├ít, ├ęs a felugr├│ ablakban az OK gombot megnyomni.
++  CLion natívan CMake-t használ projekt kezelésre, egyszerűen csak az `File > Open` menüben meg kell nyitni a
++  mappát, és a felugró ablakban az OK gombot megnyomni.
 +
 +- Visual Studio Code:
-+  Visual Studio Code is k├ępes CMake projekteket kezelni, ehhez a `ms-vscode.cpptools-extension-pack'
-+  extensiont kell telep├şteni.
++  Visual Studio Code is képes CMake projekteket kezelni, ehhez a `ms-vscode.cpptools-extension-pack'
++  extensiont kell telepíteni.
 +
-+  1. A mappa megnyit├ísa:
++  1. A mappa megnyitása:
 +
 +    `File > Open Folder...`
 +
-+  2. Megk├ęrdezi, hogy a CMake projektet konfigur├ílja-e be. Erre 'Igen'-t kell v├ílaszolni, ├ęs
-+     kiv├ílasztani a MinGW ford├şt├│t.
++  2. Megkérdezi, hogy a CMake projektet konfigurálja-e be. Erre 'Igen'-t kell válaszolni, és
++     kiválasztani a MinGW fordítót.
 +
-+    Megjegyz├ęs:
-+      Saj├ít g├ępen lehets├ęges m├ísik ford├şt├│kat is haszn├ílni, a hivatalos Microsoft ├íltal
-+      biztos├ştott dokument├íci├│ l├ęp├ęsei szerint ├ęrdemes ezeket bekonfigur├ílni.
-+      Ak├ír Windowson, ak├ír UNIX lesz├írmazottakon is ugyan ez a folyamat ├ęrv├ęnyes, esetleg
-+      ├ęrdemes a hivatalos dokument├íci├│t elolvasni.
++    Megjegyzés:
++      Saját gépen lehetséges másik fordítókat is használni, a hivatalos Microsoft által
++      biztosított dokumentáció lépései szerint érdemes ezeket bekonfigurálni.
++      Akár Windowson, akár UNIX leszármazottakon is ugyan ez a folyamat érvényes, esetleg
++      érdemes a hivatalos dokumentációt elolvasni.
 +
-+  3. `F5' billentyuvel lehets├ęges ford├ştani/debugolni a projektet.
++  3. `Ctrl-F5' billentyuvel lehetséges fordítani/debugolni a projektet.
 +
-+    Megjegyz├ęs:
-+      A HSZK-s g├ępeken a GDB/LLDB opci├│t kell kiv├ílasztani, ha megk├ęrdezi; A Windows opci├│
-+      Visual C++ ford├şt├│ haszn├ílat├íra van.
-+
-+  A HSZK-s g├ępeken ez ut├ín a GCC 8.1.0 ford├şt├│val k├ępes ford├ştani a rendszer.
++  A HSZK-s gépeken ez után a GCC 8.1.0 fordítóval képes fordítani a rendszer, MSVC nem
++  lett még ellenőrizve.
 +
 +- Code::Blocks:
-+  Code::Blocks nem k├ępes nat├şvan CMake projekteket kezelni.
++  Code::Blocks nem képes natívan CMake projekteket kezelni.
 +
-+  A Code::Blocks projektf├íjlok saj├ítoss├íga miatt, ezt a f├íjl ├ęs a hozz├í tartoz├│ Makefile teljes
-+  el├ęr├ęsi ├║tvonalakat tartalmaznak, ├şgy nem tudjuk ┼Ĺket el┼Ĺre elk├ęsz├şteni.
-+  Ehhez a k├Âvetkez┼Ĺ parancs haszn├ílhat├│, abban a mapp├íban, amelyikben a CMakeLists.txt f├íjl tal├ílhat├│:
++  A Code::Blocks projektfájlok sajátossága miatt, ezt a fájl és a hozzá tartozó Makefile teljes
++  elérési útvonalakat tartalmaznak, így nem tudjuk őket előre elkészíteni.
++  Ehhez a következő parancs használható, abban a mappában, amelyikben a CMakeLists.txt fájl található:
 +
 +    cmake -G "CodeBlocks - MinGW Makefiles" -S. -B CB-Build-Directory
-+
-+  Megjegyz├ęs:
-+    A biztos├ştott C::B f├íjl, m├ęg egy r├ęgebbi verzi├│, amelyik a r├ęgi projekthez tartozott, ├ęs nem a
-+    CMake f├íjlb├│l lett gener├ílva, ├ęs nem rendelkezik mindennel, amivel a CMake projekt igen, p├ęld├íul
-+    k├╝l├Ânf├ęle ford├şt├ísi kapcsol├│k, amelyek a hibakeres├ęst teszik k├Ânnyebb├ę.
 diff --git a/nagyobb/CMakeLists.txt b/nagyobb/CMakeLists.txt
 new file mode 100644
-index 0000000..476372a
+index 0000000..354b19d
 --- /dev/null
 +++ b/nagyobb/CMakeLists.txt
-@@ -0,0 +1,120 @@
+@@ -0,0 +1,117 @@
 +# nagyobb project
 +#
 +# Originally created: 2023-02-24.
 +#
 +# CMakeLists.txt --
-+#   Els┼Ĺdleges CMake file a nagyobb projekt ford├şt├ís├íhoz.
-+#   Haszn├ílat:
++#   Elsődleges CMake file a nagyobb projekt fordításához.
++#   Használat:
 +#       - parancssor: cmake -B _build -S .
-+#       - CLion/Visual Studio: Megnyitni a mapp├ít projektk├ęnt
++#       - CLion/Visual Studio: Megnyitni a mappát projektként
 +#       - Code::Blocks:
 +#           1) cmake -G "CodeBlocks - <1>" -B _build -S .
 +#               - Windows: <1> = MinGW Makefiles
 +#               - Unix: <2> = Unix Makefiles
-+#           2) A _build/*.cbp f├íjlt megnyitni
++#           2) A _build/*.cbp fájlt megnyitni
 +
 +cmake_minimum_required(VERSION 3.18) # Debian Bullseye
 +
@@ -144,8 +136,7 @@ index 0000000..476372a
 +
 +add_executable(nagyobb
 +               nagyobb_main.cpp
-+               fuggvenyeim.cpp
-+               fuggvenyeim.h)
++               fuggvenyeim.cpp)
 +
 +target_compile_features(nagyobb PRIVATE cxx_std_98)
 +set_target_properties(nagyobb PROPERTIES
@@ -207,11 +198,9 @@ index 0000000..476372a
 +        /we4928 # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
 +        /we4946 # reinterpret_cast used between related classes: 'class1' and 'class2'
 +        /we4986 # 'symbol': exception specification does not match previous declaration
-+        /w15032 # detected #pragma warning(push) with no corresponding #pragma warning(pop)
 +        4
 +        /permissive-
 +        /diagnostics:caret)
-+
 +    # MSVC /Wall turns on **every** warning, like Clang -Weverything
 +    set(gw_found_warnings $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>)
 +
@@ -238,7 +227,7 @@ index 0000000..b5d56a8
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/ALL_BUILD.vcxproj
 @@ -0,0 +1,181 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -426,7 +415,7 @@ index 0000000..dccdabf
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/ALL_BUILD.vcxproj.filters
 @@ -0,0 +1,8 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt" />
@@ -440,7 +429,7 @@ index 0000000..88a5509
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/ALL_BUILD.vcxproj.user
 @@ -0,0 +1,4 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup />
 +</Project>
@@ -451,7 +440,7 @@ index 0000000..3df1ce4
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/ZERO_CHECK.vcxproj
 @@ -0,0 +1,171 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -629,7 +618,7 @@ index 0000000..972afcb
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/ZERO_CHECK.vcxproj.filters
 @@ -0,0 +1,13 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <CustomBuild Include="C:\Users\169262\infocpp\lab_01\nagyobb\HSZK-VS16\CMakeFiles\7d0009ad09d3ad7e71bed2c61422ea79\generate.stamp.rule">
@@ -648,7 +637,7 @@ index 0000000..a833b26
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/cpp_labor01.sln
 @@ -0,0 +1,53 @@
-+´╗┐
++﻿
 +Microsoft Visual Studio Solution File, Format Version 12.00
 +# Visual Studio Version 16
 +Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{467A187C-0091-3283-B535-6E1AF251BF3B}"
@@ -707,7 +696,7 @@ index 0000000..5b0ee50
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/nagyobb.vcxproj
 @@ -0,0 +1,343 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup>
 +    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
@@ -1057,7 +1046,7 @@ index 0000000..9e4cc3b
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/nagyobb.vcxproj.filters
 @@ -0,0 +1,27 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
 +    <ClCompile Include="$(ProjectDir)\..\nagyobb_main.cpp">
@@ -1090,7 +1079,7 @@ index 0000000..88a5509
 --- /dev/null
 +++ b/nagyobb/HSZK-VS16/nagyobb.vcxproj.user
 @@ -0,0 +1,4 @@
-+´╗┐<?xml version="1.0" encoding="utf-8"?>
++﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <PropertyGroup />
 +</Project>
@@ -1180,7 +1169,7 @@ index c70beef..0000000
 --- a/nagyobb/nagyobb.sln
 +++ /dev/null
 @@ -1,31 +0,0 @@
--´╗┐
+-﻿
 -Microsoft Visual Studio Solution File, Format Version 12.00
 -# Visual Studio 15
 -VisualStudioVersion = 15.0.27004.2005

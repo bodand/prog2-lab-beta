@@ -1,5 +1,1 @@
-# Default works fine normally
-* text=auto
-
-# but breaks on .patch files
-*.patch -crlf 
+* -crlf 
