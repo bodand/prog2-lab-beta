@@ -2,13 +2,13 @@
 
 image:https://badgen.net/github/checks/bodand/prog2-lab-beta/trunk[]
 
-A programozás alapjai 2 tárgy laborjainak új CMake alapú szervezésének béta verziója.
+A programozás alapjai 2 tárgy laborjainak új cmake alapú szervezésének béta verziója.
 
-Ez a raktár tartalmazza azokat a .patch fájlokat, amelyek egy új, modern CMake
+Ez a repó tartalmazza azokat a .patch fájlokat, amelyek egy új, modern CMake
 alapú fordítási rendszert vezetnek be a laborokra.
 
 Ez azt takarja, hogy az eddig használt Makefile, Code::Blocks projekt fájl, és
-Visual Studio solutionök helyett most egy centralizált CMake script kezeli a 
+Visual Studio solution-ök helyett most egy centralizált CMake script kezeli a 
 projekt konfigurálását és fordítását.
 
 Ez azért előnyös, mert így most mindenki közel tetszőleges platformon közel 
@@ -21,7 +21,7 @@ projekteket. Így szimplán csak meg kell nyitni a mappát, amelyikben a projekt
 van, és rögtön fel ismeri a környezet.
 
 .HSZK 
-A HSZK felkészültsége kicsit nehezíti ezt a folyamatot, mert explicité szükség 
+A HSZK felkészültsége kicsit nehezíti ezt a folyamatot, mert explicite szükség 
 van VS solution fájlok generálására, ahelyett, hogy csak meg lehessen nyitni 
 a CMake projekteket.
 Ennek orvoslására ebben a félévben még sajnos nem került sor, úgyhogy még 
@@ -32,7 +32,7 @@ az ideiglenes megoldást kell alkalmazni.
 Minden laborhoz tartozik egy saját .patch fájl, amit git-tel vagy patch(1)-el 
 lehet alkalmazni.
 
-Ehhez le kell tölteni a hivatalos labor feladat raktár, és bemásolni a megfelelő
+Ehhez le kell tölteni a hivatalos labor feladat repóját, és bemásolni a megfelelő
 \.patch fájlt ebből a mappából.
 Például a CPPswap feladat leklónozása után a cppswap.patch fájlt kell bemásolni a
 mappába.
@@ -48,7 +48,7 @@ git apply --reject --ignore-space-change --ignore-whitespace --whitespace=fix <p
 
 Ez a folyamat generál egy új CMakeLists.txt fájlt a mappában, amelyet lehet használni
 a projekt konfigurálására.
-Emellett feltakarítja az így fölöslegessé vált régi rendszer fájljait.
+Emellett feltakarítja az így fölöslegessé vált régi rendszer fájlait.
 
 Minden mappában generálódik egy BUILD.txt fájl, amely a rendszer használatának folyamatát 
 írja le a legtöbb (általam) ismert fejlesztő környezet esetére.
