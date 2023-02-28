@@ -41,13 +41,12 @@ mutatjuk be, ami működik Windowson is.
 
 [source,bash]
 ----
-$ cat <patch-fájl> | git apply
+$ git apply --reject --ignore-space-change --ignore-whitespace --whitespace=fix <patch-file>
 ----
-
-Windowson CMD.EXE parancssorból a `cat` parancs cserélendő ``type``-ra.
 
 Ez a folyamat generál egy új CMakeLists.txt fájlt a mappában, amelyet lehet használni
 a projekt konfigurálására.
+Emellett feltakarítja az így fölöslegessé vált régi rendszer fájlait.
 
 Minden mappában generálódik egy BUILD.txt fájl, amely a rendszer használatának folyamatát 
 írja le a legtöbb (általam) ismert fejlesztő környezet esetére.
