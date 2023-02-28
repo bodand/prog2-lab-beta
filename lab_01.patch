@@ -11,7 +11,7 @@ index 0000000..5ab7b14
 +Használati utasítás:
 +
 +- Parancssorból:
-+  Parancssorból direktben a CMake program segítéségével kezelheto a projekt, ehhez
++  Parancssorból direktben a CMake program segítéségével kezelhető a projekt, ehhez
 +  be kell lépni a projekt mappájába.
 +
 +  Megjegyzés:
@@ -29,7 +29,7 @@ index 0000000..5ab7b14
 +  Megjegyzés:
 +    A CMake által használt "Generátor", azaz az a program, amelyik a tényleges fordítást hajtja végre,
 +    platformfüggő.
-+    Windowson ha talál Visual Studio-t, akkor a Visual Stuido-hoz tartozó MSBuild-et fogja
++    Windowson ha talál Visual Studio-t, akkor a Visual Studio-hoz tartozó MSBuild-et fogja
 +    használni, de Linuxon például GNU Make szokott lenni egy jó megoldás.
 +    Ha felül szeretnénk írni ezt a választását, akkor a -G kapcsolóval lehet megtenni.
 +    (A cmake --help parancs kilistázza az összes érvényes generátor nevet.)
