@@ -11,7 +11,7 @@ index 0000000..5ab7b14
 +Használati utasítás:
 +
 +- Parancssorból:
-+  Parancssorból direktben a CMake program segítéségével kezelheto a projekt, ehhez
++  Parancssorból direktben a CMake program segítéségével kezelhető a projekt, ehhez
 +  be kell lépni a projekt mappájába.
 +
 +  Megjegyzés:
@@ -29,13 +29,13 @@ index 0000000..5ab7b14
 +  Megjegyzés:
 +    A CMake által használt "Generátor", azaz az a program, amelyik a tényleges fordítást hajtja végre,
 +    platformfüggő.
-+    Windowson ha talál Visual Studio-t, akkor a Visual Stuido-hoz tartozó MSBuild-et fogja
++    Windowson ha talál Visual Studio-t, akkor a Visual Studio-hoz tartozó MSBuild-et fogja
 +    használni, de Linuxon például GNU Make szokott lenni egy jó megoldás.
 +    Ha felül szeretnénk írni ezt a választását, akkor a -G kapcsolóval lehet megtenni.
 +    (A cmake --help parancs kilistázza az összes érvényes generátor nevet.)
 +
 +- Visual Studio 2019 (HSZK):
-+  Alapvetoen biztosítunk a laborhoz egy VS 2019 solution fájlt, ami a HSZK-beli jogosultság problémákat
++  Alapvetően biztosítunk a laborhoz egy VS 2019 solution fájlt, ami a HSZK-beli jogosultság problémákat
 +  próbálja orvosolni.
 +
 +  Ennek használatához szimplán a HSZK-VS16 mappában található solution (.sln) fájlt kell megnyitni, és
@@ -58,7 +58,7 @@ index 0000000..5ab7b14
 +  legenerálni a saját formátumukba a projekt fájlokat.
 +
 +  Ehhez el kell indítani Visual Studio-t és a `File > Open > Folder...` opcióval kiválasztani a
-+  megfelelo mappát (amiben a CMakeLists.txt fájl lakik) és minden megtörténik automatikusan.
++  megfelelő mappát (amiben a CMakeLists.txt fájl lakik) és minden megtörténik automatikusan.
 +
 +  Megjegyzés:
 +    A HSZK-ban telepített gépeken ez a megoldás nem fog működni, mert a VS-hez szükséges script
@@ -85,7 +85,7 @@ index 0000000..5ab7b14
 +      Akár Windowson, akár UNIX leszármazottakon is ugyan ez a folyamat érvényes, esetleg
 +      érdemes a hivatalos dokumentációt elolvasni.
 +
-+  3. `Ctrl-F5' billentyuvel lehetséges fordítani/debugolni a projektet.
++  3. `Ctrl-F5' billentyűvel lehetséges fordítani/debugolni a projektet.
 +
 +  A HSZK-s gépeken ez után a GCC 8.1.0 fordítóval képes fordítani a rendszer, MSVC nem
 +  lett még ellenőrizve.
