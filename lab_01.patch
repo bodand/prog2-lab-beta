@@ -54,7 +54,7 @@ index 0000000..5ab7b14
 +    jelenik meg benne, mint egy manuálisan készült VS solutionben. Ez nem baj.
 +
 +- Visual Studio 2019/2022 (Otthoni):
-+  A modernebb Visual Studio verziók képesek natívan kezelni CMake projekteket, nem kell nekik explicite
++  A modernebb Visual Studio verziók képesek natívan kezelni CMake projekteket, nem kell nekik explicité
 +  legenerálni a saját formátumukba a projekt fájlokat.
 +
 +  Ehhez el kell indítani Visual Studio-t és a `File > Open > Folder...` opcióval kiválasztani a
