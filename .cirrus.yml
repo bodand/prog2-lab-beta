@@ -1,61 +1,55 @@
-task:
+unix_like_task:
   matrix:
     # Debian ####################################
     - name: "Debian Bookworm"
       container:
         image: debian:bookworm-slim
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     - name: "Debian Bullseye"
       container: 
         image: debian:bullseye-slim
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     - name: "Debian testing"
       container: 
         image: debian:testing-slim
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     # Fedora ####################################
     - name: "Fedora latest"
       container:
         image: fedora:latest
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     # Alpine ####################################
     - name: "Alpine latest"
       container:
         image: alpine:latest
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     - name: "Alpine edge"
       container:
         image: alpine:edge
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     # FreeBSD ###################################
     - name: "FreeBSD 13.1"
       freebsd_instance:
         image_family: freebsd-13-1
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0
       env:
-        TEST_FILE: ci/test-patch.sh
-    # Windows ###################################
-    - name: "Windows Server Core 2019"
-      windows_container:
-        image: cirrusci/windowsservercore:2019
-      env:
-        TEST_FILE: ci\test-patch.bat
+        TEST_FILE: sh ci/test-patch.sh
     # Mac OSX ###################################
     - name: "Mac OSX "
       macos_instance:
         image: ghcr.io/cirruslabs/macos-ventura-base:latest
       env:
-        TEST_FILE: ci/test-patch.sh
+        TEST_FILE: sh ci/test-patch.sh
   
   cppswap_script:
     - ${TEST_FILE} https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
@@ -65,3 +59,21 @@ task:
   
   nem_oo_script:
     - ${TEST_FILE} https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
+
+windows_task:
+  matrix:
+    # Windows ###################################
+    - name: "Windows Server Core 2019"
+      windows_container:
+        image: cirrusci/windowsservercore:2019
+      env:
+        TEST_FILE: ci\test-patch.bat
+
+  cppswap_script:
+    - %TEST_FILE% https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
+  
+  lab_01_script:
+    - %TEST_FILE% https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
+  
+  nem_oo_script:
+    - %TEST_FILE% https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
