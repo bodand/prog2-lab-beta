@@ -7,6 +7,7 @@ unix_like_task:
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
+        - apt update
         - apt install -y git
     - name: "Debian Bullseye"
       container: 
@@ -14,6 +15,7 @@ unix_like_task:
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
+        - apt update
         - apt install -y git
     - name: "Debian testing"
       container: 
@@ -21,6 +23,7 @@ unix_like_task:
       env:
         TEST_FILE: sh ci/test-patch.sh
       get_git_script:
+        - apt update
         - apt install -y git
     # Fedora ####################################
     - name: "Fedora latest"
