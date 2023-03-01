@@ -79,7 +79,7 @@ unix_like_task:
 
 windows_task:
   env:
-    PATH: C:\ProgramData\chocolatey\bin;C:\tools\msys64\ucrt64\bin;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;%PATH%
+    PATH: C:\ProgramData\chocolatey\bin;C:\Program Files\CMake\bin;C:\tools\msys64\ucrt64\bin;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;%PATH%
 
   matrix:
     # Windows ###################################
