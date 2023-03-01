@@ -78,6 +78,9 @@ unix_like_task:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
 
 windows_task:
+  env:
+    PATH: C:\ProgramData\chocolatey\bin;C:\tools\msys64\ucrt64\bin;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;%PATH%
+
   matrix:
     # Windows ###################################
     - name: "Windows Server Core 2019 -- MSYS2"
@@ -86,6 +89,7 @@ windows_task:
       install_packages_script:
         - choco install -y cmake
         - choco install -y msys2
+        - C:\tools\msys64\msys2_shell.cmd -no-start -c "pacman --noconfirm -S mingw-w64-ucrt-x86_64-gcc"
       env:
         DO_MSYS2: yes
     - name: "Windows Server Core 2019 -- MinGW"
