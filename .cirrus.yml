@@ -40,14 +40,14 @@ unix_like_task:
         cpu: 1
         memory: 1G
       get_git_script:
-        - apk add git cmake g++
+        - apk add git cmake g++ make
     - name: "Alpine edge"
       container:
         image: alpine:edge
         cpu: 1
         memory: 1G
       get_git_script:
-        - apk add git cmake g++
+        - apk add git cmake g++ make
     # FreeBSD ###################################
     - name: "FreeBSD 13.1"
       freebsd_instance:
