@@ -67,9 +67,6 @@ unix_like_task:
     - name: "Mac OSX Ventura"
       macos_instance:
         image: ghcr.io/cirruslabs/macos-ventura-base:latest
-      get_git_script:
-        - brew install cmake
-        - brew install gcc
 
   cppswap_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
