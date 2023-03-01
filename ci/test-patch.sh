@@ -6,7 +6,7 @@ git apply --reject --ignore-space-change --ignore-whitespace --whitespace=fix ".
 
 if [ "x$2" = "xlab_01" ]
 then
-  cd nagyobb
+  cd nagyobb || exit 2
 fi
 
 cmake -S. -B_build

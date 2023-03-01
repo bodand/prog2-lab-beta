@@ -6,7 +6,7 @@ unix_like_task:
         image: debian:bookworm-slim
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - apt update
         - apt install -y git cmake g++
     - name: "Debian Bullseye"
@@ -14,7 +14,7 @@ unix_like_task:
         image: debian:bullseye-slim
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - apt update
         - apt install -y git cmake g++
     - name: "Debian testing"
@@ -22,7 +22,7 @@ unix_like_task:
         image: debian:testing-slim
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - apt update
         - apt install -y git cmake g++
     # Fedora ####################################
@@ -31,7 +31,7 @@ unix_like_task:
         image: fedora:latest
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - dnf install -y git cmake g++
     # Alpine ####################################
     - name: "Alpine latest"
@@ -39,14 +39,14 @@ unix_like_task:
         image: alpine:latest
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - apk add git cmake g++ make
     - name: "Alpine edge"
       container:
         image: alpine:edge
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - apk add git cmake g++ make
     # FreeBSD ###################################
     - name: "FreeBSD 13.1"
@@ -54,14 +54,14 @@ unix_like_task:
         image_family: freebsd-13-1
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - pkg install -y git cmake
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0-snap
         cpu: 1
         memory: 1G
-      get_git_script:
+      install_packages_script:
         - pkg install -y git cmake
     # Mac OSX ###################################
     - name: "Mac OSX Ventura"
@@ -80,9 +80,30 @@ unix_like_task:
 windows_task:
   matrix:
     # Windows ###################################
-    - name: "Windows Server Core 2019"
+    - name: "Windows Server Core 2019 -- MSYS2"
       windows_container:
         image: cirrusci/windowsservercore:2019
+      install_packages_script:
+        - choco install -y cmake
+        - choco install -y msys2
+      env:
+        DO_MSYS2: yes
+    - name: "Windows Server Core 2019 -- MinGW"
+      windows_container:
+        image: cirrusci/windowsservercore:2019
+      install_packages_script:
+        - choco install -y cmake
+        - choco install -y mingw
+      env:
+        DO_MINGW: yes
+    - name: "Windows Server Core 2019 -- Visual Studio 17 2022"
+      windows_container:
+        image: cirrusci/windowsservercore:2019
+      install_packages_script:
+        - choco install -y cmake
+        - choco install visualstudio2022buildtools -y --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Redist.14.Latest --add Microsoft.Component.VC.Runtime.UCRTSDK --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Component.VC.ATL"
+      env:
+        DO_MSVC: yes
 
   cppswap_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
