@@ -6,94 +6,78 @@ unix_like_task:
         image: debian:bookworm-slim
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
         - apt update
-        - apt install -y git
+        - apt install -y git cmake g++
     - name: "Debian Bullseye"
       container: 
         image: debian:bullseye-slim
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
         - apt update
-        - apt install -y git
+        - apt install -y git cmake g++
     - name: "Debian testing"
       container: 
         image: debian:testing-slim
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
         - apt update
-        - apt install -y git
+        - apt install -y git cmake g++
     # Fedora ####################################
     - name: "Fedora latest"
       container:
         image: fedora:latest
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
-        - dnf install -y git
+        - dnf install -y git cmake g++
     # Alpine ####################################
     - name: "Alpine latest"
       container:
         image: alpine:latest
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
-        - apk add git
+        - apk add git cmake g++
     - name: "Alpine edge"
       container:
         image: alpine:edge
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
-        - apk add git
+        - apk add git cmake g++
     # FreeBSD ###################################
     - name: "FreeBSD 13.1"
       freebsd_instance:
         image_family: freebsd-13-1
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
-        - pkg install -y git
+        - pkg install -y git cmake g++
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0-snap
         cpu: 1
         memory: 1G
-      env:
-        TEST_FILE: sh ci/test-patch.sh
       get_git_script:
-        - pkg install -y git
+        - pkg install -y git cmake g++
     # Mac OSX ###################################
-    - name: "Mac OSX "
+    - name: "Mac OSX Ventura"
       macos_instance:
         image: ghcr.io/cirruslabs/macos-ventura-base:latest
-      env:
-        TEST_FILE: sh ci/test-patch.sh
-  
+      get_git_script:
+        - brew install cmake g++
+
   cppswap_script:
-    - ${TEST_FILE} https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
-  
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
+
   lab_01_script:
-    - ${TEST_FILE} https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
-  
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
+
   nem_oo_script:
-    - ${TEST_FILE} https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
 
 windows_task:
   matrix:
@@ -104,9 +88,9 @@ windows_task:
 
   cppswap_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
-  
+
   lab_01_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
-  
+
   nem_oo_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
