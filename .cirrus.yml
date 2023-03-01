@@ -90,7 +90,7 @@ windows_task:
         - choco install -y cmake
         - choco install -y ninja
         - choco install -y msys2
-        - C:\tools\msys64\msys2_shell.cmd -no-start -c "pacman --noconfirm -S mingw-w64-ucrt-x86_64-gcc"
+        - C:\tools\msys64\msys2_shell.cmd -defterm -no-start -c "pacman --noconfirm -S mingw-w64-ucrt-x86_64-gcc"
       env:
         DO_MSYS2: yes
     - name: "Windows Server Core 2019 -- MinGW"
