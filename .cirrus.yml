@@ -88,6 +88,7 @@ windows_task:
         image: cirrusci/windowsservercore:2019
       install_packages_script:
         - choco install -y cmake
+        - choco install -y ninja
         - choco install -y msys2
         - C:\tools\msys64\msys2_shell.cmd -no-start -c "pacman --noconfirm -S mingw-w64-ucrt-x86_64-gcc"
       env:
