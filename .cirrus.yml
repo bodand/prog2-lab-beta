@@ -55,14 +55,14 @@ unix_like_task:
         cpu: 1
         memory: 1G
       get_git_script:
-        - pkg install -y git cmake g++
+        - pkg install -y git cmake
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0-snap
         cpu: 1
         memory: 1G
       get_git_script:
-        - pkg install -y git cmake g++
+        - pkg install -y git cmake
     # Mac OSX ###################################
     - name: "Mac OSX Ventura"
       macos_instance:
