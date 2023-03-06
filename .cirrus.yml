@@ -84,7 +84,7 @@ unix_like_task:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_03.git lab_03
 
   cppellenallas_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenellas
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
 
 windows_task:
   env:
@@ -135,4 +135,4 @@ windows_task:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_03.git lab_03
 
   cppellenallas_script:
-    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenellas
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
