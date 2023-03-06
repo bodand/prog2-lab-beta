@@ -77,6 +77,15 @@ unix_like_task:
   nem_oo_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
 
+  lab_02_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_02.git lab_02
+
+  lab_03_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_03.git lab_03
+
+  cppellenallas_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenellas
+
 windows_task:
   env:
     PATH: C:\ProgramData\chocolatey\bin;C:\Program Files\CMake\bin;C:\tools\msys64\ucrt64\bin;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;%PATH%
@@ -118,3 +127,12 @@ windows_task:
 
   nem_oo_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
+
+  lab_02_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_02.git lab_02
+
+  lab_03_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_03.git lab_03
+
+  cppellenallas_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenellas
