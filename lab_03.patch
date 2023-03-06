@@ -42,8 +42,8 @@ index 0000000..c927f11
 +        VERSION 1.0.0
 +        LANGUAGES C CXX)
 +
-+add_subdirectory(teglalap)
-+add_subdirectory(komplex)
++add_subdirectory(Teglalap)
++add_subdirectory(Komplex)
 diff --git a/HSZK-VS16/ALL_BUILD.vcxproj b/HSZK-VS16/ALL_BUILD.vcxproj
 new file mode 100644
 index 0000000..322a536
