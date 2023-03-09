@@ -2711,7 +2711,7 @@ index 0000000..3caf6a4
 +project(cpp_lab_02_string2
 +        HOMEPAGE_URL "https://git.ik.bme.hu/Prog2/labor_peldak/lab_02"
 +        VERSION 1.0.0
-+        LANGUAGES C)
++        LANGUAGES CXX)
 +
 +add_library(memtrace_cxx STATIC
 +            memtrace.cpp memtrace.h)
