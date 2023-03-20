@@ -1,0 +1,1720 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+new file mode 100644
+index 0000000..678460b
+--- /dev/null
++++ b/CMakeLists.txt
+@@ -0,0 +1,61 @@
++# Genetika project
++#
++# Originally created: 2023-03-20.
++#
++# CMakeLists.txt --
++#   CMake file a Genetika projekt fordításához.
++#   Használat:
++#       - parancssor: cmake -B _build -S . && cmake --build _build
++#       - CLion/Visual Studio: Megnyitni a mappát projektként
++#       - Code::Blocks:
++#           1) cmake -G "CodeBlocks - <1>" -B _build -S .
++#               - Windows: <1> = MinGW Makefiles
++#               - Unix: <2> = Unix Makefiles
++#           2) A _build/*.cbp fájlt megnyitni
++
++cmake_minimum_required(VERSION 3.18) # Debian Bullseye
++
++cmake_policy(SET CMP0092 NEW)
++cmake_policy(SET CMP0077 NEW)
++cmake_policy(SET CMP0048 NEW)
++
++include(CheckCXXCompilerFlag)
++
++option(CPP_WARNINGS_TO_ERRORS "Build with -Werror or equivalent flag. [Default: On]" Yes)
++option(CPP_ENABLE_MEMTRACE "Enable building with memtrace instrumentation. [Default: On]" Yes)
++
++project(cpp_genetika
++        VERSION 1.0.0
++        LANGUAGES CXX)
++
++add_library(memtrace STATIC
++            memtrace.cpp memtrace.h)
++target_compile_features(memtrace PRIVATE cxx_std_11)
++target_compile_definitions(memtrace PUBLIC
++                           $<$<BOOL:${CPP_ENABLE_MEMTRACE}>:MEMTRACE>)
++
++add_executable(genetika 
++               allapotgep.cpp allapotgep.h 
++               genetika_teszt.cpp 
++               gtest_lite.h)
++add_custom_target(TARGET genetika POST_BUILD
++                  COMMENT "Copying input .txt files to build directory"
++                  COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_CURRENT_SOURCE_DIR}/paros.txt" "${CMAKE_CURRENT_BINARY_DIR}"
++                  COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_CURRENT_SOURCE_DIR}/implikacio.txt" "${CMAKE_CURRENT_BINARY_DIR}")
++
++target_compile_features(genetika PRIVATE cxx_std_98)
++set_target_properties(genetika PROPERTIES
++                      CXX_EXTENSIONS OFF)
++if (CPP_ENABLE_MEMTRACE)
++    target_link_libraries(genetika PRIVATE memtrace)
++endif ()
++if (CPP_WARNINGS_TO_ERRORS)
++    target_compile_options(genetika PRIVATE
++                           $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Werror>
++                           $<$<CXX_COMPILER_ID:MSVC>:/WX>)
++endif ()
++
++# Generate warning flags appropriate to the currently used compiler.
++include("${CMAKE_CURRENT_SOURCE_DIR}/generate_warnings.cmake")
++
++generate_warnings(CXX genetika)
+diff --git a/HSZK-VS16/ALL_BUILD.vcxproj b/HSZK-VS16/ALL_BUILD.vcxproj
+new file mode 100644
+index 0000000..3b32200
+--- /dev/null
++++ b/HSZK-VS16/ALL_BUILD.vcxproj
+@@ -0,0 +1,185 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup>
++    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
++  </PropertyGroup>
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="MinSizeRel|x64">
++      <Configuration>MinSizeRel</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="RelWithDebInfo|x64">
++      <Configuration>RelWithDebInfo</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{7F003F57-3DA5-352A-82C8-8345CC84F02F}</ProjectGuid>
++    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
++    <Keyword>Win32Proj</Keyword>
++    <Platform>x64</Platform>
++    <ProjectName>ALL_BUILD</ProjectName>
++    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt">
++      <StdOutEncoding>UTF-8</StdOutEncoding>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}</Project>
++      <Name>ZERO_CHECK</Name>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
++    </ProjectReference>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\genetika.vcxproj">
++      <Project>{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}</Project>
++      <Name>genetika</Name>
++    </ProjectReference>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\memtrace.vcxproj">
++      <Project>{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}</Project>
++      <Name>memtrace</Name>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/HSZK-VS16/ALL_BUILD.vcxproj.filters b/HSZK-VS16/ALL_BUILD.vcxproj.filters
+new file mode 100644
+index 0000000..8cfe03b
+--- /dev/null
++++ b/HSZK-VS16/ALL_BUILD.vcxproj.filters
+@@ -0,0 +1,8 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt" />
++  </ItemGroup>
++  <ItemGroup>
++  </ItemGroup>
++</Project>
+diff --git a/HSZK-VS16/TARGET.vcxproj b/HSZK-VS16/TARGET.vcxproj
+new file mode 100644
+index 0000000..39281a7
+--- /dev/null
++++ b/HSZK-VS16/TARGET.vcxproj
+@@ -0,0 +1,259 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup>
++    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
++  </PropertyGroup>
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="MinSizeRel|x64">
++      <Configuration>MinSizeRel</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="RelWithDebInfo|x64">
++      <Configuration>RelWithDebInfo</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}</ProjectGuid>
++    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
++    <Keyword>Win32Proj</Keyword>
++    <Platform>x64</Platform>
++    <ProjectName>TARGET</ProjectName>
++    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\1ff9058312f8072d1802346f86da2f0b\TARGET.rule">
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Copying input .txt files to build directory</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++Debug\genetika.exe POST_BUILD
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/paros.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/implikacio.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Copying input .txt files to build directory</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++Release\genetika.exe POST_BUILD
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/paros.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/implikacio.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</VerifyInputsAndOutputsExist>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Copying input .txt files to build directory</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++MinSizeRel\genetika.exe POST_BUILD
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/paros.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/implikacio.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</VerifyInputsAndOutputsExist>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Copying input .txt files to build directory</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++RelWithDebInfo\genetika.exe POST_BUILD
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/paros.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -E copy C:/Users/169262/infocpp/genetika/implikacio.txt C:/Users/169262/infocpp/genetika/HSZK-VS16
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</VerifyInputsAndOutputsExist>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt">
++      <StdOutEncoding>UTF-8</StdOutEncoding>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++    <None Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET">
++    </None>
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}</Project>
++      <Name>ZERO_CHECK</Name>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
++    </ProjectReference>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\genetika.vcxproj">
++      <Project>{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}</Project>
++      <Name>genetika</Name>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/HSZK-VS16/TARGET.vcxproj.filters b/HSZK-VS16/TARGET.vcxproj.filters
+new file mode 100644
+index 0000000..6d886d7
+--- /dev/null
++++ b/HSZK-VS16/TARGET.vcxproj.filters
+@@ -0,0 +1,17 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\1ff9058312f8072d1802346f86da2f0b\TARGET.rule">
++      <Filter>CMake Rules</Filter>
++    </CustomBuild>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt" />
++  </ItemGroup>
++  <ItemGroup>
++    <None Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\TARGET" />
++  </ItemGroup>
++  <ItemGroup>
++    <Filter Include="CMake Rules">
++      <UniqueIdentifier>{EAA600FB-AB54-380C-B410-5FFE21F2AE32}</UniqueIdentifier>
++    </Filter>
++  </ItemGroup>
++</Project>
+diff --git a/HSZK-VS16/ZERO_CHECK.vcxproj b/HSZK-VS16/ZERO_CHECK.vcxproj
+new file mode 100644
+index 0000000..d6e959e
+--- /dev/null
++++ b/HSZK-VS16/ZERO_CHECK.vcxproj
+@@ -0,0 +1,171 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup>
++    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
++  </PropertyGroup>
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="MinSizeRel|x64">
++      <Configuration>MinSizeRel</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="RelWithDebInfo|x64">
++      <Configuration>RelWithDebInfo</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}</ProjectGuid>
++    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
++    <Keyword>Win32Proj</Keyword>
++    <Platform>x64</Platform>
++    <ProjectName>ZERO_CHECK</ProjectName>
++    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
++    <ConfigurationType>Utility</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\1ff9058312f8072d1802346f86da2f0b\generate.stamp.rule">
++      <StdOutEncoding>UTF-8</StdOutEncoding>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Checking Build System</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/169262/infocpp/genetika/HSZK-VS16/cpp_genetika.sln
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\CMakeLists.txt;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Checking Build System</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/169262/infocpp/genetika/HSZK-VS16/cpp_genetika.sln
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\CMakeLists.txt;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Checking Build System</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/169262/infocpp/genetika/HSZK-VS16/cpp_genetika.sln
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\CMakeLists.txt;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Checking Build System</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/Users/169262/infocpp/genetika/HSZK-VS16/cpp_genetika.sln
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\CMakeLists.txt;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++  </ItemGroup>
++  <ItemGroup>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/HSZK-VS16/ZERO_CHECK.vcxproj.filters b/HSZK-VS16/ZERO_CHECK.vcxproj.filters
+new file mode 100644
+index 0000000..01c4b41
+--- /dev/null
++++ b/HSZK-VS16/ZERO_CHECK.vcxproj.filters
+@@ -0,0 +1,13 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\1ff9058312f8072d1802346f86da2f0b\generate.stamp.rule">
++      <Filter>CMake Rules</Filter>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++    <Filter Include="CMake Rules">
++      <UniqueIdentifier>{EAA600FB-AB54-380C-B410-5FFE21F2AE32}</UniqueIdentifier>
++    </Filter>
++  </ItemGroup>
++</Project>
+diff --git a/HSZK-VS16/cpp_genetika.sln b/HSZK-VS16/cpp_genetika.sln
+new file mode 100644
+index 0000000..18f6cfb
+--- /dev/null
++++ b/HSZK-VS16/cpp_genetika.sln
+@@ -0,0 +1,78 @@
++﻿
++Microsoft Visual Studio Solution File, Format Version 12.00
++# Visual Studio Version 16
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{7F003F57-3DA5-352A-82C8-8345CC84F02F}"
++	ProjectSection(ProjectDependencies) = postProject
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA} = {0B201B8B-AE87-3C53-ACCA-391AD214B6DA}
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2} = {3C8384E1-995B-30E1-ABE6-EE30AC067BF2}
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0} = {28BCE00C-EAB8-39C3-92DF-84513BB88AC0}
++	EndProjectSection
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TARGET", "TARGET.vcxproj", "{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}"
++	ProjectSection(ProjectDependencies) = postProject
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA} = {0B201B8B-AE87-3C53-ACCA-391AD214B6DA}
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2} = {3C8384E1-995B-30E1-ABE6-EE30AC067BF2}
++	EndProjectSection
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}"
++	ProjectSection(ProjectDependencies) = postProject
++	EndProjectSection
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "genetika", "genetika.vcxproj", "{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}"
++	ProjectSection(ProjectDependencies) = postProject
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA} = {0B201B8B-AE87-3C53-ACCA-391AD214B6DA}
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0} = {28BCE00C-EAB8-39C3-92DF-84513BB88AC0}
++	EndProjectSection
++EndProject
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "memtrace", "memtrace.vcxproj", "{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}"
++	ProjectSection(ProjectDependencies) = postProject
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA} = {0B201B8B-AE87-3C53-ACCA-391AD214B6DA}
++	EndProjectSection
++EndProject
++Global
++	GlobalSection(SolutionConfigurationPlatforms) = preSolution
++		Debug|x64 = Debug|x64
++		Release|x64 = Release|x64
++		MinSizeRel|x64 = MinSizeRel|x64
++		RelWithDebInfo|x64 = RelWithDebInfo|x64
++	EndGlobalSection
++	GlobalSection(ProjectConfigurationPlatforms) = postSolution
++		{7F003F57-3DA5-352A-82C8-8345CC84F02F}.Debug|x64.ActiveCfg = Debug|x64
++		{7F003F57-3DA5-352A-82C8-8345CC84F02F}.Release|x64.ActiveCfg = Release|x64
++		{7F003F57-3DA5-352A-82C8-8345CC84F02F}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{7F003F57-3DA5-352A-82C8-8345CC84F02F}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}.Debug|x64.ActiveCfg = Debug|x64
++		{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}.Release|x64.ActiveCfg = Release|x64
++		{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{AAE4D49F-9DDD-3137-9DCB-4550593F5CDF}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.Debug|x64.ActiveCfg = Debug|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.Debug|x64.Build.0 = Debug|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.Release|x64.ActiveCfg = Release|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.Release|x64.Build.0 = Release|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.Debug|x64.ActiveCfg = Debug|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.Debug|x64.Build.0 = Debug|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.Release|x64.ActiveCfg = Release|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.Release|x64.Build.0 = Release|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.Debug|x64.ActiveCfg = Debug|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.Debug|x64.Build.0 = Debug|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.Release|x64.ActiveCfg = Release|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.Release|x64.Build.0 = Release|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++	EndGlobalSection
++	GlobalSection(ExtensibilityGlobals) = postSolution
++		SolutionGuid = {BD0E8E74-AC7F-3AD0-B018-5EE2FE897EED}
++	EndGlobalSection
++	GlobalSection(ExtensibilityAddIns) = postSolution
++	EndGlobalSection
++EndGlobal
+diff --git a/HSZK-VS16/genetika.vcxproj b/HSZK-VS16/genetika.vcxproj
+new file mode 100644
+index 0000000..13ac62f
+--- /dev/null
++++ b/HSZK-VS16/genetika.vcxproj
+@@ -0,0 +1,348 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup>
++    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
++  </PropertyGroup>
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="MinSizeRel|x64">
++      <Configuration>MinSizeRel</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="RelWithDebInfo|x64">
++      <Configuration>RelWithDebInfo</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{3C8384E1-995B-30E1-ABE6-EE30AC067BF2}</ProjectGuid>
++    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
++    <Keyword>Win32Proj</Keyword>
++    <Platform>x64</Platform>
++    <ProjectName>genetika</ProjectName>
++    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
++    <ConfigurationType>Application</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\Debug\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">genetika.dir\Debug\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">genetika</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
++    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
++    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\Release\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">genetika.dir\Release\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">genetika</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
++    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
++    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\MinSizeRel\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">genetika.dir\MinSizeRel\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">genetika</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
++    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
++    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\RelWithDebInfo\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">genetika.dir\RelWithDebInfo\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">genetika</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
++    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</LinkIncremental>
++    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">true</GenerateManifest>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <AdditionalOptions>%(AdditionalOptions) /w14062 /w14242 /w14287 /w14296 /w14547 /w14548 /w14549 /w14822</AdditionalOptions>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <ConformanceMode>true</ConformanceMode>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <DiagnosticsFormat>Caret</DiagnosticsFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
++      <Optimization>Disabled</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <TreatSpecificWarningsAsErrors>4263;4265;4350;4545;4546;4596;4837;4928;4946;4986</TreatSpecificWarningsAsErrors>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <UseFullPaths>false</UseFullPaths>
++      <WarningLevel>Level4</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;MEMTRACE;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;MEMTRACE;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Link>
++      <AdditionalDependencies>Debug\memtrace.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
++      <ImportLibrary>C:/Users/169262/infocpp/genetika/HSZK-VS16/Debug/genetika.lib</ImportLibrary>
++      <ProgramDataBaseFile>C:/Users/169262/infocpp/genetika/HSZK-VS16/Debug/genetika.pdb</ProgramDataBaseFile>
++      <SubSystem>Console</SubSystem>
++    </Link>
++    <ProjectReference>
++      <LinkLibraryDependencies>false</LinkLibraryDependencies>
++    </ProjectReference>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <AdditionalOptions>%(AdditionalOptions) /w14062 /w14242 /w14287 /w14296 /w14547 /w14548 /w14549 /w14822</AdditionalOptions>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <ConformanceMode>true</ConformanceMode>
++      <DiagnosticsFormat>Caret</DiagnosticsFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
++      <Optimization>MaxSpeed</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <TreatSpecificWarningsAsErrors>4263;4265;4350;4545;4546;4596;4837;4928;4946;4986</TreatSpecificWarningsAsErrors>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <UseFullPaths>false</UseFullPaths>
++      <WarningLevel>Level4</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++      <DebugInformationFormat>
++      </DebugInformationFormat>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Link>
++      <AdditionalDependencies>Release\memtrace.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++      <GenerateDebugInformation>false</GenerateDebugInformation>
++      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
++      <ImportLibrary>C:/Users/169262/infocpp/genetika/HSZK-VS16/Release/genetika.lib</ImportLibrary>
++      <ProgramDataBaseFile>C:/Users/169262/infocpp/genetika/HSZK-VS16/Release/genetika.pdb</ProgramDataBaseFile>
++      <SubSystem>Console</SubSystem>
++    </Link>
++    <ProjectReference>
++      <LinkLibraryDependencies>false</LinkLibraryDependencies>
++    </ProjectReference>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
++    <ClCompile>
++      <AdditionalOptions>%(AdditionalOptions) /w14062 /w14242 /w14287 /w14296 /w14547 /w14548 /w14549 /w14822</AdditionalOptions>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <ConformanceMode>true</ConformanceMode>
++      <DiagnosticsFormat>Caret</DiagnosticsFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
++      <Optimization>MinSpace</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <TreatSpecificWarningsAsErrors>4263;4265;4350;4545;4546;4596;4837;4928;4946;4986</TreatSpecificWarningsAsErrors>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <UseFullPaths>false</UseFullPaths>
++      <WarningLevel>Level4</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++      <DebugInformationFormat>
++      </DebugInformationFormat>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Link>
++      <AdditionalDependencies>MinSizeRel\memtrace.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++      <GenerateDebugInformation>false</GenerateDebugInformation>
++      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
++      <ImportLibrary>C:/Users/169262/infocpp/genetika/HSZK-VS16/MinSizeRel/genetika.lib</ImportLibrary>
++      <ProgramDataBaseFile>C:/Users/169262/infocpp/genetika/HSZK-VS16/MinSizeRel/genetika.pdb</ProgramDataBaseFile>
++      <SubSystem>Console</SubSystem>
++    </Link>
++    <ProjectReference>
++      <LinkLibraryDependencies>false</LinkLibraryDependencies>
++    </ProjectReference>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
++    <ClCompile>
++      <AdditionalOptions>%(AdditionalOptions) /w14062 /w14242 /w14287 /w14296 /w14547 /w14548 /w14549 /w14822</AdditionalOptions>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <ConformanceMode>true</ConformanceMode>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <DiagnosticsFormat>Caret</DiagnosticsFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
++      <Optimization>MaxSpeed</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <TreatSpecificWarningsAsErrors>4263;4265;4350;4545;4546;4596;4837;4928;4946;4986</TreatSpecificWarningsAsErrors>
++      <TreatWarningAsError>true</TreatWarningAsError>
++      <UseFullPaths>false</UseFullPaths>
++      <WarningLevel>Level4</WarningLevel>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Link>
++      <AdditionalDependencies>RelWithDebInfo\memtrace.lib;kernel32.lib;user32.lib;gdi32.lib;winspool.lib;shell32.lib;ole32.lib;oleaut32.lib;uuid.lib;comdlg32.lib;advapi32.lib</AdditionalDependencies>
++      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++      <GenerateDebugInformation>true</GenerateDebugInformation>
++      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
++      <ImportLibrary>C:/Users/169262/infocpp/genetika/HSZK-VS16/RelWithDebInfo/genetika.lib</ImportLibrary>
++      <ProgramDataBaseFile>C:/Users/169262/infocpp/genetika/HSZK-VS16/RelWithDebInfo/genetika.pdb</ProgramDataBaseFile>
++      <SubSystem>Console</SubSystem>
++    </Link>
++    <ProjectReference>
++      <LinkLibraryDependencies>false</LinkLibraryDependencies>
++    </ProjectReference>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt">
++      <StdOutEncoding>UTF-8</StdOutEncoding>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\allapotgep.cpp" />
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\allapotgep.h" />
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\genetika_teszt.cpp" />
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\gtest_lite.h" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}</Project>
++      <Name>ZERO_CHECK</Name>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
++    </ProjectReference>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\memtrace.vcxproj">
++      <Project>{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}</Project>
++      <Name>memtrace</Name>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/HSZK-VS16/genetika.vcxproj.filters b/HSZK-VS16/genetika.vcxproj.filters
+new file mode 100644
+index 0000000..caa7d12
+--- /dev/null
++++ b/HSZK-VS16/genetika.vcxproj.filters
+@@ -0,0 +1,30 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup>
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\allapotgep.cpp">
++      <Filter>Source Files</Filter>
++    </ClCompile>
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\genetika_teszt.cpp">
++      <Filter>Source Files</Filter>
++    </ClCompile>
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\allapotgep.h">
++      <Filter>Header Files</Filter>
++    </ClInclude>
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\gtest_lite.h">
++      <Filter>Header Files</Filter>
++    </ClInclude>
++  </ItemGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt" />
++  </ItemGroup>
++  <ItemGroup>
++    <Filter Include="Header Files">
++      <UniqueIdentifier>{8D8DB72A-2134-3D09-9D95-5878BAB6EFEA}</UniqueIdentifier>
++    </Filter>
++    <Filter Include="Source Files">
++      <UniqueIdentifier>{4716F29D-1D85-334E-8154-D2B8F11BA14D}</UniqueIdentifier>
++    </Filter>
++  </ItemGroup>
++</Project>
+diff --git a/HSZK-VS16/memtrace.vcxproj b/HSZK-VS16/memtrace.vcxproj
+new file mode 100644
+index 0000000..678ead7
+--- /dev/null
++++ b/HSZK-VS16/memtrace.vcxproj
+@@ -0,0 +1,270 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project DefaultTargets="Build" ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <PropertyGroup>
++    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
++  </PropertyGroup>
++  <ItemGroup Label="ProjectConfigurations">
++    <ProjectConfiguration Include="Debug|x64">
++      <Configuration>Debug</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="Release|x64">
++      <Configuration>Release</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="MinSizeRel|x64">
++      <Configuration>MinSizeRel</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++    <ProjectConfiguration Include="RelWithDebInfo|x64">
++      <Configuration>RelWithDebInfo</Configuration>
++      <Platform>x64</Platform>
++    </ProjectConfiguration>
++  </ItemGroup>
++  <PropertyGroup Label="Globals">
++    <ProjectGuid>{28BCE00C-EAB8-39C3-92DF-84513BB88AC0}</ProjectGuid>
++    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
++    <Keyword>Win32Proj</Keyword>
++    <Platform>x64</Platform>
++    <ProjectName>memtrace</ProjectName>
++    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
++    <ConfigurationType>StaticLibrary</ConfigurationType>
++    <CharacterSet>MultiByte</CharacterSet>
++    <PlatformToolset>v142</PlatformToolset>
++  </PropertyGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
++  <ImportGroup Label="ExtensionSettings">
++  </ImportGroup>
++  <ImportGroup Label="PropertySheets">
++    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
++  </ImportGroup>
++  <PropertyGroup Label="UserMacros" />
++  <PropertyGroup>
++    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\Debug\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">memtrace.dir\Debug\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">memtrace</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\Release\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">memtrace.dir\Release\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">memtrace</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\MinSizeRel\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">memtrace.dir\MinSizeRel\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">memtrace</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\RelWithDebInfo\</OutDir>
++    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">memtrace.dir\RelWithDebInfo\</IntDir>
++    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">memtrace</TargetName>
++    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
++  </PropertyGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
++    <ClCompile>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
++      <Optimization>Disabled</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <UseFullPaths>false</UseFullPaths>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;MEMTRACE;CMAKE_INTDIR="Debug";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;MEMTRACE;CMAKE_INTDIR=\"Debug\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Lib>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
++    <ClCompile>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
++      <Optimization>MaxSpeed</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <UseFullPaths>false</UseFullPaths>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="Release";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++      <DebugInformationFormat>
++      </DebugInformationFormat>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"Release\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Lib>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
++    <ClCompile>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
++      <Optimization>MinSpace</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <UseFullPaths>false</UseFullPaths>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="MinSizeRel";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++      <DebugInformationFormat>
++      </DebugInformationFormat>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"MinSizeRel\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Lib>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
++    <ClCompile>
++      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
++      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
++      <ExceptionHandling>Sync</ExceptionHandling>
++      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
++      <Optimization>MaxSpeed</Optimization>
++      <PrecompiledHeader>NotUsing</PrecompiledHeader>
++      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
++      <RuntimeTypeInfo>true</RuntimeTypeInfo>
++      <UseFullPaths>false</UseFullPaths>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR="RelWithDebInfo";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++      <ObjectFileName>$(IntDir)</ObjectFileName>
++    </ClCompile>
++    <ResourceCompile>
++      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;MEMTRACE;CMAKE_INTDIR=\"RelWithDebInfo\";%(PreprocessorDefinitions)</PreprocessorDefinitions>
++    </ResourceCompile>
++    <Midl>
++      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
++      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
++      <HeaderFileName>%(Filename).h</HeaderFileName>
++      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
++      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
++      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
++    </Midl>
++    <Lib>
++      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
++    </Lib>
++  </ItemDefinitionGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt">
++      <StdOutEncoding>UTF-8</StdOutEncoding>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule C:/Users/169262/infocpp/genetika/CMakeLists.txt</Message>
++      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
++"C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin\cmake.exe" -SC:/Users/169262/infocpp/genetika -BC:/Users/169262/infocpp/genetika/HSZK-VS16 --check-stamp-file C:/Users/169262/infocpp/genetika/HSZK-VS16/CMakeFiles/generate.stamp
++if %errorlevel% neq 0 goto :cmEnd
++:cmEnd
++endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
++:cmErrorLevel
++exit /b %1
++:cmDone
++if %errorlevel% neq 0 goto :VCEnd</Command>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCXXInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeGenericSystem.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeInitializeConfigs.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeLanguageInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeRCInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows-MSVC.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\Windows.cmake;C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\share\cmake-3.20\Modules\Platform\WindowsPaths.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeCXXCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeRCCompiler.cmake;C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\3.20.21032501-MSVC_2\CMakeSystem.cmake;C:\Users\169262\infocpp\genetika\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\169262\infocpp\genetika\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
++    </CustomBuild>
++  </ItemGroup>
++  <ItemGroup>
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\memtrace.cpp" />
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\memtrace.h" />
++  </ItemGroup>
++  <ItemGroup>
++    <ProjectReference Include="C:\Users\169262\infocpp\genetika\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{0B201B8B-AE87-3C53-ACCA-391AD214B6DA}</Project>
++      <Name>ZERO_CHECK</Name>
++      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
++      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
++    </ProjectReference>
++  </ItemGroup>
++  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
++  <ImportGroup Label="ExtensionTargets">
++  </ImportGroup>
++</Project>
+\ No newline at end of file
+diff --git a/HSZK-VS16/memtrace.vcxproj.filters b/HSZK-VS16/memtrace.vcxproj.filters
+new file mode 100644
+index 0000000..52af05f
+--- /dev/null
++++ b/HSZK-VS16/memtrace.vcxproj.filters
+@@ -0,0 +1,24 @@
++﻿<?xml version="1.0" encoding="utf-8"?>
++<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
++  <ItemGroup>
++    <ClCompile Include="C:\Users\169262\infocpp\genetika\memtrace.cpp">
++      <Filter>Source Files</Filter>
++    </ClCompile>
++  </ItemGroup>
++  <ItemGroup>
++    <ClInclude Include="C:\Users\169262\infocpp\genetika\memtrace.h">
++      <Filter>Header Files</Filter>
++    </ClInclude>
++  </ItemGroup>
++  <ItemGroup>
++    <CustomBuild Include="C:\Users\169262\infocpp\genetika\CMakeLists.txt" />
++  </ItemGroup>
++  <ItemGroup>
++    <Filter Include="Header Files">
++      <UniqueIdentifier>{8D8DB72A-2134-3D09-9D95-5878BAB6EFEA}</UniqueIdentifier>
++    </Filter>
++    <Filter Include="Source Files">
++      <UniqueIdentifier>{4716F29D-1D85-334E-8154-D2B8F11BA14D}</UniqueIdentifier>
++    </Filter>
++  </ItemGroup>
++</Project>
+diff --git a/Makefile b/Makefile
+deleted file mode 100644
+index ba977cb..0000000
+--- a/Makefile
++++ /dev/null
+@@ -1,21 +0,0 @@
+-#
+-# Egyszerű makefile (GNU)
+-# Feltételezi, hogy minden forrás fugg minden headertől
+-#
+-CCX = g++
+-CXXFLAGS = -std=c++11 -Wall -Werror -Wdeprecated -pedantic -DMEMTRACE -g
+-TARGET  := genetika_teszt
+-
+-HEADERS := $(wildcard *.h) $(wildcard *.hpp)
+-SOURCES := $(wildcard *.cpp)
+-OBJECTS := $(SOURCES:%.cpp=%.o)
+-
+-
+-$(TARGET): $(OBJECTS)
+-	$(CCX) $^ -g -o $@ -ldl
+-	
+-%.o: %.c $(HEADERS)
+-	$(CCX) $(CXXFLAGS) -c $<
+-	
+-clean:
+-	rm -rf $(OBJECTS) genetika_teszt
+\ No newline at end of file
+diff --git a/generate_warnings.cmake b/generate_warnings.cmake
+new file mode 100644
+index 0000000..2b786a9
+--- /dev/null
++++ b/generate_warnings.cmake
+@@ -0,0 +1,89 @@
++# CppEllenallas project
++#
++# Originally created: 2023-03-06
++#
++# generate_warnings.cmake --
++#   Ez a fájl definiál olyan segédfüggvényeket, amelyket a CMake projektek 
++#   felhasználnak a fordító figyelmeztetések bekapcsolására.
++
++include(CheckCXXCompilerFlag)
++include(CheckCCompilerFlag)
++
++## CheckWarningFlag(lang OptionName CacheName) --
++#
++# Wrapper over check_(cxx|c)_compiler_flag that preprocesses the OptionName
++# parameter to handle both GCC and MSVC style compiler flags:
++# if a compiler flag starts with `/` it is passed as-is to the check,
++# otherwise it is prepended with `-W`.
++# The result of the flag will be saved to the `HAS_WARNING_${CacheName}`
++# CMake cache variable.
++#
++# Lang can be either C or CXX.
++function(check_warning_flag lang OptionName CacheName)
++    if (OptionName MATCHES [[^/]]) # MSVC-style args are passed as-is
++        set(WarningPrefix "")
++    else ()
++        set(WarningPrefix "-W")
++    endif ()
++    if (lang STREQUAL "C")
++        check_c_compiler_flag("${WarningPrefix}${OptionName}" "HasWarning_${CacheName}")
++    elseif (lang STREQUAL "CXX")
++        check_cxx_compiler_flag("${WarningPrefix}${OptionName}" "HasWarning_${CacheName}")
++    endif ()
++    set("HAS_WARNING_${CacheName}" ${HasWarning_${CacheName}} PARENT_SCOPE)
++endfunction()
++
++## generate_warnings(lang &Target)
++#
++# Checks a set of warnings and their compatibility with the currently set compiler,
++# and sets them for the given Target name's value.
++# &Target is the name of the target to set the warnings for.
++#
++# The warnings are set at the public level.
++#
++# Lang can be either C or CXX.
++function(generate_warnings lang _Target)
++    set(gw_known_warnings
++        # GCC/Clang
++        extra pedantic error=vla error=non-virtual-dtor # error=lifetime
++        error=trampolines parentheses logical-op reorder c++98-compat
++        # MSVC
++        /w14062 # enumerator 'identifier' in a switch of enum 'enumeration' is not handled
++        /w14242 # 'identifier': conversion from 'type1' to 'type2', possible loss of data
++        /we4263 # 'function': member function does not override any base class virtual member function
++        /we4265 # 'class': class has virtual functions, but destructor is not virtual
++        /w14287 # 'operator': unsigned/negative constant mismatch
++        /w14296 # 'operator': expression is always false
++        /we4350 # behavior change: 'member1' called instead of 'member2'
++        /we4545 # expression before comma evaluates to a function which is missing an argument list
++        /we4546 # function call before comma missing argument list
++        /w14547 # 'operator': operator before comma has no effect; expected operator with side-effect
++        /w14548 # expression before comma has no effect; expected expression with side-effect
++        /w14549 # 'operator1': operator before comma has no effect; did you intend 'operator2'?
++        /we4596 # 'identifier': illegal qualified name in member declaration
++        /w14822 # 'member': local class member function does not have a body
++        /we4837 # trigraph detected: '??character' replaced by 'character'
++        /we4928 # illegal copy-initialization; more than one user-defined conversion has been implicitly applied
++        /we4946 # reinterpret_cast used between related classes: 'class1' and 'class2'
++        /we4986 # 'symbol': exception specification does not match previous declaration
++        4
++        /permissive-
++        /diagnostics:caret)
++    # MSVC /Wall turns on **every** warning, like Clang -Weverything
++    set(gw_found_warnings $<$<CXX_COMPILER_ID:GNU,Clang,AppleClang>:-Wall>)
++
++    foreach (warn IN LISTS gw_known_warnings)
++        string(MAKE_C_IDENTIFIER "${warn}" CacheName)
++        check_warning_flag("${lang}" "${warn}" "${lang}${CacheName}")
++        if (HAS_WARNING_${lang}${CacheName})
++            if (warn MATCHES [[^/]]) # MSVC-style args are passed as-is
++                set(WarningPrefix "")
++            else ()
++                set(WarningPrefix "-W")
++            endif ()
++            list(APPEND gw_found_warnings "${WarningPrefix}${warn}")
++        endif ()
++    endforeach ()
++
++    target_compile_options("${_Target}" PUBLIC ${gw_found_warnings})
++endfunction()
+\ No newline at end of file
+diff --git a/genetika.cbp b/genetika.cbp
+deleted file mode 100644
+index 3a4562d..0000000
+--- a/genetika.cbp
++++ /dev/null
+@@ -1,49 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+-<CodeBlocks_project_file>
+-	<FileVersion major="1" minor="6" />
+-	<Project>
+-		<Option title="genetika" />
+-		<Option pch_mode="2" />
+-		<Option compiler="gcc" />
+-		<Build>
+-			<Target title="Debug">
+-				<Option output="bin/Debug/genetika" prefix_auto="1" extension_auto="1" />
+-				<Option object_output="obj/Debug/" />
+-				<Option type="1" />
+-				<Option compiler="gcc" />
+-				<Compiler>
+-					<Add option="-g" />
+-					<Add option="-DMEMTRACE" />
+-				</Compiler>
+-			</Target>
+-			<Target title="Release">
+-				<Option output="bin/Release/genetika" prefix_auto="1" extension_auto="1" />
+-				<Option object_output="obj/Release/" />
+-				<Option type="1" />
+-				<Option compiler="gcc" />
+-				<Compiler>
+-					<Add option="-O2" />
+-				</Compiler>
+-				<Linker>
+-					<Add option="-s" />
+-				</Linker>
+-			</Target>
+-		</Build>
+-		<Compiler>
+-			<Add option="-pedantic" />
+-			<Add option="-Wall" />
+-			<Add option="-std=c++11" />
+-		</Compiler>
+-		<Unit filename="allapotgep.cpp" />
+-		<Unit filename="allapotgep.h" />
+-		<Unit filename="genetika_teszt.cpp" />
+-		<Unit filename="gtest_lite.h" />
+-		<Unit filename="memtrace.cpp" />
+-		<Unit filename="memtrace.h" />
+-		<Extensions>
+-			<code_completion />
+-			<envvars />
+-			<debugger />
+-		</Extensions>
+-	</Project>
+-</CodeBlocks_project_file>

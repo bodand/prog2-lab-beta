@@ -136,3 +136,34 @@ windows_task:
 
   cppellenallas_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
+
+  lab_04_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_04.git lab_04
+
+  lab_05_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_05.git lab_05
+
+  clonable_hetero_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
+
+  cpp_ember_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember 
+
+  cpp_hetero_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppHetero.git cpp_hetero
+
+  cpp_monoton_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppMonoton.git cpp_monoton
+
+  cpp_vektor_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppVektor.git cpp_vektor
+
+  genetika_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/szorgalmi_feladatok/genetika.git genetika
+
+  pstring_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/PString.git pstring
+
+  ustring_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/UString.git ustring
+
