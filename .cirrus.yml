@@ -86,6 +86,37 @@ unix_like_task:
   cppellenallas_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
 
+  lab_04_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/labor_peldak/lab_04.git lab_04
+
+  lab_05_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/labor_peldak/lab_05.git lab_05
+
+  clonable_hetero_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
+
+  cpp_ember_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember 
+
+  cpp_hetero_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/CppHetero.git cpp_hetero
+
+  cpp_monoton_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/CppMonoton.git cpp_monoton
+
+  cpp_vektor_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/CppVektor.git cpp_vektor
+
+  genetika_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/szorgalmi_feladatok/genetika.git genetika
+
+  pstring_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/PString.git pstring
+
+  ustring_script:
+    - sh ci/test-patch.sh https:/git.ik.bme.hu/Prog2/ell_feladat/UString.git ustring
+
+
 windows_task:
   env:
     PATH: C:\ProgramData\chocolatey\bin;C:\Program Files\CMake\bin;C:\tools\msys64\ucrt64\bin;C:\ProgramData\chocolatey\lib\mingw\tools\install\mingw64\bin;%PATH%
