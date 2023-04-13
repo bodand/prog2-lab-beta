@@ -115,6 +115,9 @@ unix_like_task:
 
   ustring_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/UString.git ustring
+  
+  cpp_tar_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar 
 
 
 windows_task:
@@ -179,6 +182,9 @@ windows_task:
 
   cpp_ember_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember 
+  
+  cpp_tar_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar 
 
   cpp_hetero_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppHetero.git cpp_hetero
