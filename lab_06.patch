@@ -1,6 +1,6 @@
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
-index 0000000..6a9e5a9
+index 0000000..f635003
 --- /dev/null
 +++ b/CMakeLists.txt
 @@ -0,0 +1,58 @@
@@ -35,15 +35,15 @@ index 0000000..6a9e5a9
 +        LANGUAGES CXX)
 +
 +add_library(memtrace STATIC
-+            memtrace.cpp memtrace.h)
++            bicikli/memtrace.cpp bicikli/memtrace.h)
 +target_compile_features(memtrace PRIVATE cxx_std_98)
 +target_compile_definitions(memtrace PUBLIC
 +                           $<$<BOOL:${CPP_ENABLE_MEMTRACE}>:MEMTRACE>)
 +
 +add_executable(bicikli
-+               bicikli.h
-+               bicikli_teszt0.cpp
-+               gtest_lite.h
++               bicikli/bicikli.h
++               bicikli/bicikli_teszt0.cpp
++               bicikli/gtest_lite.h
 +               )
 +
 +target_compile_features(bicikli PRIVATE cxx_std_98)
@@ -65,7 +65,7 @@ index 0000000..6a9e5a9
 \ No newline at end of file
 diff --git a/HSZK-VS16/ALL_BUILD.vcxproj b/HSZK-VS16/ALL_BUILD.vcxproj
 new file mode 100644
-index 0000000..4cf2566
+index 0000000..674d4f9
 --- /dev/null
 +++ b/HSZK-VS16/ALL_BUILD.vcxproj
 @@ -0,0 +1,188 @@
@@ -96,7 +96,7 @@ index 0000000..4cf2566
 +    </ProjectConfiguration>
 +  </ItemGroup>
 +  <PropertyGroup Label="Globals">
-+    <ProjectGuid>{353A9ED9-7892-36CC-9978-AC1681A325A0}</ProjectGuid>
++    <ProjectGuid>{9A980210-B762-30F9-B006-18CDFF75A1DE}</ProjectGuid>
 +    <Keyword>Win32Proj</Keyword>
 +    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
 +    <Platform>x64</Platform>
@@ -179,11 +179,11 @@ index 0000000..4cf2566
 +    </Midl>
 +  </ItemDefinitionGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt">
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt">
 +      <UseUtf8Encoding>Always</UseUtf8Encoding>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -191,12 +191,12 @@ index 0000000..4cf2566
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -204,12 +204,12 @@ index 0000000..4cf2566
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -217,12 +217,12 @@ index 0000000..4cf2566
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -230,26 +230,26 @@ index 0000000..4cf2566
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
 +    </CustomBuild>
 +  </ItemGroup>
 +  <ItemGroup>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\ZERO_CHECK.vcxproj">
-+      <Project>{906181A7-3E01-36A7-A981-3AE096492B58}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}</Project>
 +      <Name>ZERO_CHECK</Name>
 +      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 +      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 +    </ProjectReference>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\bicikli.vcxproj">
-+      <Project>{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\bicikli.vcxproj">
++      <Project>{55A790A3-7775-357C-A071-3369A4C04285}</Project>
 +      <Name>bicikli</Name>
 +    </ProjectReference>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\memtrace.vcxproj">
-+      <Project>{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\memtrace.vcxproj">
++      <Project>{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}</Project>
 +      <Name>memtrace</Name>
 +    </ProjectReference>
 +  </ItemGroup>
@@ -260,21 +260,21 @@ index 0000000..4cf2566
 \ No newline at end of file
 diff --git a/HSZK-VS16/ALL_BUILD.vcxproj.filters b/HSZK-VS16/ALL_BUILD.vcxproj.filters
 new file mode 100644
-index 0000000..dccdabf
+index 0000000..420bcb3
 --- /dev/null
 +++ b/HSZK-VS16/ALL_BUILD.vcxproj.filters
 @@ -0,0 +1,8 @@
 +﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt" />
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt" />
 +  </ItemGroup>
 +  <ItemGroup>
 +  </ItemGroup>
 +</Project>
 diff --git a/HSZK-VS16/ZERO_CHECK.vcxproj b/HSZK-VS16/ZERO_CHECK.vcxproj
 new file mode 100644
-index 0000000..2c2a887
+index 0000000..0f3c567
 --- /dev/null
 +++ b/HSZK-VS16/ZERO_CHECK.vcxproj
 @@ -0,0 +1,174 @@
@@ -305,7 +305,7 @@ index 0000000..2c2a887
 +    </ProjectConfiguration>
 +  </ItemGroup>
 +  <PropertyGroup Label="Globals">
-+    <ProjectGuid>{906181A7-3E01-36A7-A981-3AE096492B58}</ProjectGuid>
++    <ProjectGuid>{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}</ProjectGuid>
 +    <Keyword>Win32Proj</Keyword>
 +    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
 +    <Platform>x64</Platform>
@@ -388,11 +388,11 @@ index 0000000..2c2a887
 +    </Midl>
 +  </ItemDefinitionGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\HSZK-VS16\CMakeFiles\aab1ad895e7ae9ab01fab57b795fc896\generate.stamp.rule">
++    <CustomBuild Include="$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\da02bad16721aebccf993693c4144851\generate.stamp.rule">
 +      <UseUtf8Encoding>Always</UseUtf8Encoding>
 +      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Checking Build System</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\../HSZK-VS16/lab_06.sln
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\..2/HSZK-VS16/lab_06.sln
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -400,12 +400,12 @@ index 0000000..2c2a887
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\CMakeLists.txt;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\CMakeLists.txt;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
 +      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Checking Build System</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\../HSZK-VS16/lab_06.sln
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\..2/HSZK-VS16/lab_06.sln
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -413,12 +413,12 @@ index 0000000..2c2a887
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\CMakeLists.txt;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\CMakeLists.txt;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
 +      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Checking Build System</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\../HSZK-VS16/lab_06.sln
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\..2/HSZK-VS16/lab_06.sln
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -426,12 +426,12 @@ index 0000000..2c2a887
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\CMakeLists.txt;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\CMakeLists.txt;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
 +      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Checking Build System</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\../HSZK-VS16/lab_06.sln
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file $(ProjectDir)\..2/HSZK-VS16/lab_06.sln
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -439,8 +439,8 @@ index 0000000..2c2a887
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\CMakeLists.txt;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\CMakeLists.txt;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
 +    </CustomBuild>
 +  </ItemGroup>
@@ -455,26 +455,26 @@ index 0000000..2c2a887
 \ No newline at end of file
 diff --git a/HSZK-VS16/ZERO_CHECK.vcxproj.filters b/HSZK-VS16/ZERO_CHECK.vcxproj.filters
 new file mode 100644
-index 0000000..1b20b05
+index 0000000..ca1fab1
 --- /dev/null
 +++ b/HSZK-VS16/ZERO_CHECK.vcxproj.filters
 @@ -0,0 +1,13 @@
 +﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\HSZK-VS16\CMakeFiles\aab1ad895e7ae9ab01fab57b795fc896\generate.stamp.rule">
++    <CustomBuild Include="$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\da02bad16721aebccf993693c4144851\generate.stamp.rule">
 +      <Filter>CMake Rules</Filter>
 +    </CustomBuild>
 +  </ItemGroup>
 +  <ItemGroup>
 +    <Filter Include="CMake Rules">
-+      <UniqueIdentifier>{80AD8D08-A1B3-3C37-AD42-6A7EC510A9EE}</UniqueIdentifier>
++      <UniqueIdentifier>{69BEBB21-22B2-31A9-AE8A-2E12E42DB4AF}</UniqueIdentifier>
 +    </Filter>
 +  </ItemGroup>
 +</Project>
 diff --git a/HSZK-VS16/bicikli.vcxproj b/HSZK-VS16/bicikli.vcxproj
 new file mode 100644
-index 0000000..cc179d4
+index 0000000..9761cd5
 --- /dev/null
 +++ b/HSZK-VS16/bicikli.vcxproj
 @@ -0,0 +1,347 @@
@@ -502,7 +502,7 @@ index 0000000..cc179d4
 +    </ProjectConfiguration>
 +  </ItemGroup>
 +  <PropertyGroup Label="Globals">
-+    <ProjectGuid>{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}</ProjectGuid>
++    <ProjectGuid>{55A790A3-7775-357C-A071-3369A4C04285}</ProjectGuid>
 +    <Keyword>Win32Proj</Keyword>
 +    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
 +    <Platform>x64</Platform>
@@ -539,25 +539,25 @@ index 0000000..cc179d4
 +  <PropertyGroup Label="UserMacros" />
 +  <PropertyGroup>
 +    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\Debug\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\Debug\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">bicikli.dir\Debug\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">bicikli</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.exe</TargetExt>
 +    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</LinkIncremental>
 +    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</GenerateManifest>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\Release\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\Release\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">bicikli.dir\Release\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">bicikli</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.exe</TargetExt>
 +    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkIncremental>
 +    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</GenerateManifest>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\MinSizeRel\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\MinSizeRel\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">bicikli.dir\MinSizeRel\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">bicikli</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.exe</TargetExt>
 +    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkIncremental>
 +    <GenerateManifest Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">true</GenerateManifest>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\RelWithDebInfo\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\RelWithDebInfo\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">bicikli.dir\RelWithDebInfo\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">bicikli</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.exe</TargetExt>
@@ -602,8 +602,8 @@ index 0000000..cc179d4
 +      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
 +      <GenerateDebugInformation>true</GenerateDebugInformation>
 +      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-+      <ImportLibrary>$(ProjectDir)\../HSZK-VS16/Debug/bicikli.lib</ImportLibrary>
-+      <ProgramDataBaseFile>$(ProjectDir)\../HSZK-VS16/Debug/bicikli.pdb</ProgramDataBaseFile>
++      <ImportLibrary>$(ProjectDir)\..2/HSZK-VS16/Debug/bicikli.lib</ImportLibrary>
++      <ProgramDataBaseFile>$(ProjectDir)\..2/HSZK-VS16/Debug/bicikli.pdb</ProgramDataBaseFile>
 +      <SubSystem>Console</SubSystem>
 +    </Link>
 +    <ProjectReference>
@@ -648,8 +648,8 @@ index 0000000..cc179d4
 +      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
 +      <GenerateDebugInformation>false</GenerateDebugInformation>
 +      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-+      <ImportLibrary>$(ProjectDir)\../HSZK-VS16/Release/bicikli.lib</ImportLibrary>
-+      <ProgramDataBaseFile>$(ProjectDir)\../HSZK-VS16/Release/bicikli.pdb</ProgramDataBaseFile>
++      <ImportLibrary>$(ProjectDir)\..2/HSZK-VS16/Release/bicikli.lib</ImportLibrary>
++      <ProgramDataBaseFile>$(ProjectDir)\..2/HSZK-VS16/Release/bicikli.pdb</ProgramDataBaseFile>
 +      <SubSystem>Console</SubSystem>
 +    </Link>
 +    <ProjectReference>
@@ -694,8 +694,8 @@ index 0000000..cc179d4
 +      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
 +      <GenerateDebugInformation>false</GenerateDebugInformation>
 +      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-+      <ImportLibrary>$(ProjectDir)\../HSZK-VS16/MinSizeRel/bicikli.lib</ImportLibrary>
-+      <ProgramDataBaseFile>$(ProjectDir)\../HSZK-VS16/MinSizeRel/bicikli.pdb</ProgramDataBaseFile>
++      <ImportLibrary>$(ProjectDir)\..2/HSZK-VS16/MinSizeRel/bicikli.lib</ImportLibrary>
++      <ProgramDataBaseFile>$(ProjectDir)\..2/HSZK-VS16/MinSizeRel/bicikli.pdb</ProgramDataBaseFile>
 +      <SubSystem>Console</SubSystem>
 +    </Link>
 +    <ProjectReference>
@@ -739,8 +739,8 @@ index 0000000..cc179d4
 +      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
 +      <GenerateDebugInformation>true</GenerateDebugInformation>
 +      <IgnoreSpecificDefaultLibraries>%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
-+      <ImportLibrary>$(ProjectDir)\../HSZK-VS16/RelWithDebInfo/bicikli.lib</ImportLibrary>
-+      <ProgramDataBaseFile>$(ProjectDir)\../HSZK-VS16/RelWithDebInfo/bicikli.pdb</ProgramDataBaseFile>
++      <ImportLibrary>$(ProjectDir)\..2/HSZK-VS16/RelWithDebInfo/bicikli.lib</ImportLibrary>
++      <ProgramDataBaseFile>$(ProjectDir)\..2/HSZK-VS16/RelWithDebInfo/bicikli.pdb</ProgramDataBaseFile>
 +      <SubSystem>Console</SubSystem>
 +    </Link>
 +    <ProjectReference>
@@ -748,11 +748,11 @@ index 0000000..cc179d4
 +    </ProjectReference>
 +  </ItemDefinitionGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt">
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt">
 +      <UseUtf8Encoding>Always</UseUtf8Encoding>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -760,12 +760,12 @@ index 0000000..cc179d4
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -773,12 +773,12 @@ index 0000000..cc179d4
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -786,12 +786,12 @@ index 0000000..cc179d4
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -799,25 +799,25 @@ index 0000000..cc179d4
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
 +    </CustomBuild>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ClInclude Include="$(ProjectDir)\..\bicikli.h" />
-+    <ClCompile Include="$(ProjectDir)\..\bicikli_teszt0.cpp" />
-+    <ClInclude Include="$(ProjectDir)\..\gtest_lite.h" />
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\bicikli.h" />
++    <ClCompile Include="$(ProjectDir)\..2\bicikli\bicikli_teszt0.cpp" />
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\gtest_lite.h" />
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\ZERO_CHECK.vcxproj">
-+      <Project>{906181A7-3E01-36A7-A981-3AE096492B58}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}</Project>
 +      <Name>ZERO_CHECK</Name>
 +      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 +      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
 +    </ProjectReference>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\memtrace.vcxproj">
-+      <Project>{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\memtrace.vcxproj">
++      <Project>{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}</Project>
 +      <Name>memtrace</Name>
 +    </ProjectReference>
 +  </ItemGroup>
@@ -828,66 +828,66 @@ index 0000000..cc179d4
 \ No newline at end of file
 diff --git a/HSZK-VS16/bicikli.vcxproj.filters b/HSZK-VS16/bicikli.vcxproj.filters
 new file mode 100644
-index 0000000..a4ea6de
+index 0000000..307c865
 --- /dev/null
 +++ b/HSZK-VS16/bicikli.vcxproj.filters
 @@ -0,0 +1,27 @@
 +﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
-+    <ClCompile Include="$(ProjectDir)\..\bicikli_teszt0.cpp">
++    <ClCompile Include="$(ProjectDir)\..2\bicikli\bicikli_teszt0.cpp">
 +      <Filter>Source Files</Filter>
 +    </ClCompile>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ClInclude Include="$(ProjectDir)\..\bicikli.h">
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\bicikli.h">
 +      <Filter>Header Files</Filter>
 +    </ClInclude>
-+    <ClInclude Include="$(ProjectDir)\..\gtest_lite.h">
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\gtest_lite.h">
 +      <Filter>Header Files</Filter>
 +    </ClInclude>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt" />
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt" />
 +  </ItemGroup>
 +  <ItemGroup>
 +    <Filter Include="Header Files">
-+      <UniqueIdentifier>{A386B384-8F18-3986-9A04-C1E7518675CA}</UniqueIdentifier>
++      <UniqueIdentifier>{811D5109-3704-3ECE-AFA5-CE8C503E5C8D}</UniqueIdentifier>
 +    </Filter>
 +    <Filter Include="Source Files">
-+      <UniqueIdentifier>{EC58EB5D-DE76-34A4-9CDB-C316EDD40D77}</UniqueIdentifier>
++      <UniqueIdentifier>{0067D8CF-1CE3-3DDF-9798-C9FD35300D91}</UniqueIdentifier>
 +    </Filter>
 +  </ItemGroup>
 +</Project>
 diff --git a/HSZK-VS16/lab_06.sln b/HSZK-VS16/lab_06.sln
 new file mode 100644
-index 0000000..6f85dd9
+index 0000000..bb1989e
 --- /dev/null
 +++ b/HSZK-VS16/lab_06.sln
 @@ -0,0 +1,68 @@
 +﻿
 +Microsoft Visual Studio Solution File, Format Version 12.00
 +# Visual Studio Version 16
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{353A9ED9-7892-36CC-9978-AC1681A325A0}"
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{9A980210-B762-30F9-B006-18CDFF75A1DE}"
 +	ProjectSection(ProjectDependencies) = postProject
-+		{906181A7-3E01-36A7-A981-3AE096492B58} = {906181A7-3E01-36A7-A981-3AE096492B58}
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6} = {9E44E047-7636-3A5A-9C9F-D5136E4F72A6}
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C} = {4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D} = {1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}
++		{55A790A3-7775-357C-A071-3369A4C04285} = {55A790A3-7775-357C-A071-3369A4C04285}
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A} = {11264BBC-F25D-3B65-AE5C-01C5150B6F0A}
 +	EndProjectSection
 +EndProject
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{906181A7-3E01-36A7-A981-3AE096492B58}"
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}"
 +	ProjectSection(ProjectDependencies) = postProject
 +	EndProjectSection
 +EndProject
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bicikli", "bicikli.vcxproj", "{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}"
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bicikli", "bicikli.vcxproj", "{55A790A3-7775-357C-A071-3369A4C04285}"
 +	ProjectSection(ProjectDependencies) = postProject
-+		{906181A7-3E01-36A7-A981-3AE096492B58} = {906181A7-3E01-36A7-A981-3AE096492B58}
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C} = {4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D} = {1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A} = {11264BBC-F25D-3B65-AE5C-01C5150B6F0A}
 +	EndProjectSection
 +EndProject
-+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "memtrace", "memtrace.vcxproj", "{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}"
++Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "memtrace", "memtrace.vcxproj", "{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}"
 +	ProjectSection(ProjectDependencies) = postProject
-+		{906181A7-3E01-36A7-A981-3AE096492B58} = {906181A7-3E01-36A7-A981-3AE096492B58}
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D} = {1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}
 +	EndProjectSection
 +EndProject
 +Global
@@ -898,44 +898,44 @@ index 0000000..6f85dd9
 +		RelWithDebInfo|x64 = RelWithDebInfo|x64
 +	EndGlobalSection
 +	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-+		{353A9ED9-7892-36CC-9978-AC1681A325A0}.Debug|x64.ActiveCfg = Debug|x64
-+		{353A9ED9-7892-36CC-9978-AC1681A325A0}.Release|x64.ActiveCfg = Release|x64
-+		{353A9ED9-7892-36CC-9978-AC1681A325A0}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-+		{353A9ED9-7892-36CC-9978-AC1681A325A0}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.Debug|x64.ActiveCfg = Debug|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.Debug|x64.Build.0 = Debug|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.Release|x64.ActiveCfg = Release|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.Release|x64.Build.0 = Release|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-+		{906181A7-3E01-36A7-A981-3AE096492B58}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.Debug|x64.ActiveCfg = Debug|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.Debug|x64.Build.0 = Debug|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.Release|x64.ActiveCfg = Release|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.Release|x64.Build.0 = Release|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-+		{9E44E047-7636-3A5A-9C9F-D5136E4F72A6}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.Debug|x64.ActiveCfg = Debug|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.Debug|x64.Build.0 = Debug|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.Release|x64.ActiveCfg = Release|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.Release|x64.Build.0 = Release|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
-+		{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++		{9A980210-B762-30F9-B006-18CDFF75A1DE}.Debug|x64.ActiveCfg = Debug|x64
++		{9A980210-B762-30F9-B006-18CDFF75A1DE}.Release|x64.ActiveCfg = Release|x64
++		{9A980210-B762-30F9-B006-18CDFF75A1DE}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{9A980210-B762-30F9-B006-18CDFF75A1DE}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.Debug|x64.ActiveCfg = Debug|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.Debug|x64.Build.0 = Debug|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.Release|x64.ActiveCfg = Release|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.Release|x64.Build.0 = Release|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.Debug|x64.ActiveCfg = Debug|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.Debug|x64.Build.0 = Debug|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.Release|x64.ActiveCfg = Release|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.Release|x64.Build.0 = Release|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{55A790A3-7775-357C-A071-3369A4C04285}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.Debug|x64.ActiveCfg = Debug|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.Debug|x64.Build.0 = Debug|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.Release|x64.ActiveCfg = Release|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.Release|x64.Build.0 = Release|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.MinSizeRel|x64.ActiveCfg = MinSizeRel|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.MinSizeRel|x64.Build.0 = MinSizeRel|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
++		{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
 +	EndGlobalSection
 +	GlobalSection(ExtensibilityGlobals) = postSolution
-+		SolutionGuid = {5B3D4263-68CF-38E3-A599-BCDAFD95C047}
++		SolutionGuid = {A53B47CE-EE3B-3B3E-B7C6-F5268160A128}
 +	EndGlobalSection
 +	GlobalSection(ExtensibilityAddIns) = postSolution
 +	EndGlobalSection
 +EndGlobal
 diff --git a/HSZK-VS16/memtrace.vcxproj b/HSZK-VS16/memtrace.vcxproj
 new file mode 100644
-index 0000000..3c5f94e
+index 0000000..c27048b
 --- /dev/null
 +++ b/HSZK-VS16/memtrace.vcxproj
 @@ -0,0 +1,270 @@
@@ -963,7 +963,7 @@ index 0000000..3c5f94e
 +    </ProjectConfiguration>
 +  </ItemGroup>
 +  <PropertyGroup Label="Globals">
-+    <ProjectGuid>{4CF2A6CB-1B12-3C96-AC7E-E6F7E29B183C}</ProjectGuid>
++    <ProjectGuid>{11264BBC-F25D-3B65-AE5C-01C5150B6F0A}</ProjectGuid>
 +    <Keyword>Win32Proj</Keyword>
 +    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
 +    <Platform>x64</Platform>
@@ -1000,19 +1000,19 @@ index 0000000..3c5f94e
 +  <PropertyGroup Label="UserMacros" />
 +  <PropertyGroup>
 +    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\Debug\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\Debug\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">memtrace.dir\Debug\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">memtrace</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\Release\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\Release\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">memtrace.dir\Release\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">memtrace</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\MinSizeRel\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\MinSizeRel\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">memtrace.dir\MinSizeRel\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">memtrace</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
-+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\RelWithDebInfo\</OutDir>
++    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\RelWithDebInfo\</OutDir>
 +    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">memtrace.dir\RelWithDebInfo\</IntDir>
 +    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">memtrace</TargetName>
 +    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
@@ -1137,11 +1137,11 @@ index 0000000..3c5f94e
 +    </Lib>
 +  </ItemDefinitionGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt">
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt">
 +      <UseUtf8Encoding>Always</UseUtf8Encoding>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -1149,12 +1149,12 @@ index 0000000..3c5f94e
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -1162,12 +1162,12 @@ index 0000000..3c5f94e
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -1175,12 +1175,12 @@ index 0000000..3c5f94e
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\../CMakeLists.txt</Message>
++      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule $(ProjectDir)\..2/CMakeLists.txt</Message>
 +      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
-+"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\.. -B$(ProjectDir)\../HSZK-VS16 --check-stamp-file $(ProjectDir)\../HSZK-VS16/CMakeFiles/generate.stamp
++"C:\Program Files\CMake\bin\cmake.exe" -S$(ProjectDir)\..2 -B$(ProjectDir)\..2/HSZK-VS16 --check-stamp-file $(ProjectDir)\..2/HSZK-VS16/CMakeFiles/generate.stamp
 +if %errorlevel% neq 0 goto :cmEnd
 +:cmEnd
 +endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
@@ -1188,18 +1188,18 @@ index 0000000..3c5f94e
 +exit /b %1
 +:cmDone
 +if %errorlevel% neq 0 goto :VCEnd</Command>
-+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
-+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
++      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCXXInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCheckCompilerFlagCommonPatterns.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeCommonLanguageInclude.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeGenericSystem.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeInitializeConfigs.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeLanguageInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeRCInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInformation.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CMakeSystemSpecificInitialize.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\CheckCXXSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Compiler\MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckCompilerFlag.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckFlagCommonConfig.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Internal\CheckSourceCompiles.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows-MSVC.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\Windows.cmake;C:\Program Files\CMake\share\cmake-3.26\Modules\Platform\WindowsPaths.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeCXXCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeRCCompiler.cmake;$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\3.26.0\CMakeSystem.cmake;$(ProjectDir)\..2\generate_warnings.cmake;%(AdditionalInputs)</AdditionalInputs>
++      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(ProjectDir)\..2\HSZK-VS16\CMakeFiles\generate.stamp</Outputs>
 +      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
 +    </CustomBuild>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ClCompile Include="$(ProjectDir)\..\memtrace.cpp" />
-+    <ClInclude Include="$(ProjectDir)\..\memtrace.h" />
++    <ClCompile Include="$(ProjectDir)\..2\bicikli\memtrace.cpp" />
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\memtrace.h" />
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ProjectReference Include="$(ProjectDir)\..\HSZK-VS16\ZERO_CHECK.vcxproj">
-+      <Project>{906181A7-3E01-36A7-A981-3AE096492B58}</Project>
++    <ProjectReference Include="$(ProjectDir)\..2\HSZK-VS16\ZERO_CHECK.vcxproj">
++      <Project>{1F9B82F3-B097-3BE1-B874-55C37EAE0F4D}</Project>
 +      <Name>ZERO_CHECK</Name>
 +      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
 +      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
@@ -1212,37 +1212,34 @@ index 0000000..3c5f94e
 \ No newline at end of file
 diff --git a/HSZK-VS16/memtrace.vcxproj.filters b/HSZK-VS16/memtrace.vcxproj.filters
 new file mode 100644
-index 0000000..92a527c
+index 0000000..a481f6c
 --- /dev/null
 +++ b/HSZK-VS16/memtrace.vcxproj.filters
 @@ -0,0 +1,24 @@
 +﻿<?xml version="1.0" encoding="utf-8"?>
 +<Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 +  <ItemGroup>
-+    <ClCompile Include="$(ProjectDir)\..\memtrace.cpp">
++    <ClCompile Include="$(ProjectDir)\..2\bicikli\memtrace.cpp">
 +      <Filter>Source Files</Filter>
 +    </ClCompile>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <ClInclude Include="$(ProjectDir)\..\memtrace.h">
++    <ClInclude Include="$(ProjectDir)\..2\bicikli\memtrace.h">
 +      <Filter>Header Files</Filter>
 +    </ClInclude>
 +  </ItemGroup>
 +  <ItemGroup>
-+    <CustomBuild Include="$(ProjectDir)\..\CMakeLists.txt" />
++    <CustomBuild Include="$(ProjectDir)\..2\CMakeLists.txt" />
 +  </ItemGroup>
 +  <ItemGroup>
 +    <Filter Include="Header Files">
-+      <UniqueIdentifier>{A386B384-8F18-3986-9A04-C1E7518675CA}</UniqueIdentifier>
++      <UniqueIdentifier>{811D5109-3704-3ECE-AFA5-CE8C503E5C8D}</UniqueIdentifier>
 +    </Filter>
 +    <Filter Include="Source Files">
-+      <UniqueIdentifier>{EC58EB5D-DE76-34A4-9CDB-C316EDD40D77}</UniqueIdentifier>
++      <UniqueIdentifier>{0067D8CF-1CE3-3DDF-9798-C9FD35300D91}</UniqueIdentifier>
 +    </Filter>
 +  </ItemGroup>
 +</Project>
-diff --git a/bicikli.h b/bicikli.h
-new file mode 100644
-index 0000000..e69de29
 diff --git a/bicikli/Makefile b/bicikli/Makefile
 deleted file mode 100644
 index bb17d03..0000000
@@ -1343,10 +1340,9 @@ index 942d9f0..0000000
 -		</Extensions>
 -	</Project>
 -</CodeBlocks_project_file>
-diff --git a/bicikli/bicikli_teszt0.cpp b/bicikli_teszt0.cpp
-similarity index 100%
-rename from bicikli/bicikli_teszt0.cpp
-rename to bicikli_teszt0.cpp
+diff --git a/bicikli/bicikli.h b/bicikli/bicikli.h
+new file mode 100644
+index 0000000..e69de29
 diff --git a/generate_warnings.cmake b/generate_warnings.cmake
 new file mode 100644
 index 0000000..f3ef747
@@ -1443,15 +1439,3 @@ index 0000000..f3ef747
 +    target_compile_options("${_Target}" PUBLIC ${gw_found_warnings})
 +endfunction()
 \ No newline at end of file
-diff --git a/bicikli/gtest_lite.h b/gtest_lite.h
-similarity index 100%
-rename from bicikli/gtest_lite.h
-rename to gtest_lite.h
-diff --git a/bicikli/memtrace.cpp b/memtrace.cpp
-similarity index 100%
-rename from bicikli/memtrace.cpp
-rename to memtrace.cpp
-diff --git a/bicikli/memtrace.h b/memtrace.h
-similarity index 100%
-rename from bicikli/memtrace.h
-rename to memtrace.h
