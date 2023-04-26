@@ -94,6 +94,12 @@ unix_like_task:
 
   lab_06_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_06.git lab_06
+  
+  lab_07_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_07.git lab_07
+
+  lab_08_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_08.git lab_08
 
   clonable_hetero_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
@@ -182,6 +188,12 @@ windows_task:
 
   lab_06_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_06.git lab_06
+
+  lab_07_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_07.git lab_07
+
+  lab_08_script:
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/labor_peldak/lab_08.git lab_08
 
   clonable_hetero_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
