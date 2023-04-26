@@ -68,23 +68,14 @@ unix_like_task:
       macos_instance:
         image: ghcr.io/cirruslabs/macos-ventura-base:latest
 
-  cppswap_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
-
   lab_01_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_01.git lab_01
-
-  nem_oo_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
 
   lab_02_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_02.git lab_02
 
   lab_03_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_03.git lab_03
-
-  cppellenallas_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
 
   lab_04_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_04.git lab_04
@@ -100,6 +91,24 @@ unix_like_task:
 
   lab_08_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_08.git lab_08
+
+  lab_09_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_09.git lab_09
+
+  lab_10_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_10.git lab_10
+
+  lab_11_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_11.git lab_11
+
+  cppswap_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CPPswap.git cppswap
+
+  nem_oo_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/Nem_OO.git nem_oo
+
+  cppellenallas_script:
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEllenallas.git cppellenallas
 
   clonable_hetero_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
