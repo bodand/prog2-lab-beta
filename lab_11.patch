@@ -1,25 +1,29 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..d80f1be
+index 0000000..6986c23
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,20 @@
 +HSZK-CB/*
++!HSZK-CB/lab_11.cbp
 +!HSZK-CB/Makefile
-+!HSZK-CB/cpp_labor01.cbp
 +HSZK-VS16/*
 +!HSZK-VS16/ALL_BUILD.vcxproj
 +!HSZK-VS16/ALL_BUILD.vcxproj.filters
-+!HSZK-VS16/ALL_BUILD.vcxproj.user
++!HSZK-VS16/badguy.vcxproj
++!HSZK-VS16/badguy.vcxproj.filters
++!HSZK-VS16/diamond.vcxproj
++!HSZK-VS16/diamond.vcxproj.filters
++!HSZK-VS16/hello_world.vcxproj
++!HSZK-VS16/hello_world.vcxproj.filters
++!HSZK-VS16/lab_11.sln
++!HSZK-VS16/secret.vcxproj
++!HSZK-VS16/secret.vcxproj.filters
 +!HSZK-VS16/ZERO_CHECK.vcxproj
 +!HSZK-VS16/ZERO_CHECK.vcxproj.filters
-+!HSZK-VS16/cpp_labor01.sln
-+!HSZK-VS16/nagyobb.vcxproj
-+!HSZK-VS16/nagyobb.vcxproj.filters
-+!HSZK-VS16/nagyobb.vcxproj.user
 +LINUX-CB/*
++!LINUX-CB/lab_11.cbp
 +!LINUX-CB/Makefile
-+!LINUX-CB/cpp_labor01.cbp
 \ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
@@ -3196,6 +3200,287 @@ index 0000000..9ba11e3
 +	"$(CMAKE_COMMAND)" -G "CodeBlocks - Unix Makefiles" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 +.PHONY : cmake_check_build_system
 +
+diff --git a/LINUX-CB/lab_11.cbp b/LINUX-CB/lab_11.cbp
+new file mode 100644
+index 0000000..a4b0113
+--- /dev/null
++++ b/LINUX-CB/lab_11.cbp
+@@ -0,0 +1,275 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<CodeBlocks_project_file>
++	<FileVersion major="1" minor="6"/>
++	<Project>
++		<Option title="lab_11"/>
++		<Option makefile_is_custom="1"/>
++		<Option compiler="gcc"/>
++		<Option virtualFolders="CMake Files\;"/>
++		<Build>
++			<Target title="all">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 all"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="diamond">
++				<Option output="../LINUX-CB/diamond" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 diamond"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="diamond/fast">
++				<Option output="../LINUX-CB/diamond" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 diamond/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="badguy">
++				<Option output="../LINUX-CB/badguy" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 badguy"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="badguy/fast">
++				<Option output="../LINUX-CB/badguy" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 badguy/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="hello_world">
++				<Option output="../LINUX-CB/hello_world" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 hello_world"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="hello_world/fast">
++				<Option output="../LINUX-CB/hello_world" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 hello_world/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="secret">
++				<Option output="../LINUX-CB/secret" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 secret"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="secret/fast">
++				<Option output="../LINUX-CB/secret" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 secret/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="edit_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 edit_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="rebuild_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++		</Build>
++		<Unit filename="../diamond/alkalmazott.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/diamond_test.cpp">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/elkeszult.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/gtest_lite.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/iroda.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/irodistak.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/memtrace.cpp">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/memtrace.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/palkalmazott.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/perz_test.cpp">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/pirodistak.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../diamond/serializable.h">
++			<Option target="diamond"/>
++		</Unit>
++		<Unit filename="../what/badguy/badguy.cpp">
++			<Option target="badguy"/>
++		</Unit>
++		<Unit filename="../what/hello_world/hello_world.cpp">
++			<Option target="hello_world"/>
++		</Unit>
++		<Unit filename="../what/secret/buffover.cpp">
++			<Option target="secret"/>
++		</Unit>
++		<Unit filename="../what/secret/secret.cpp">
++			<Option target="secret"/>
++		</Unit>
++		<Unit filename="../what/secret/secret.h">
++			<Option target="secret"/>
++		</Unit>
++		<Unit filename="../CMakeLists.txt">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../generate_warnings.cmake">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++	</Project>
++</CodeBlocks_project_file>
 diff --git a/diamond/Makefile b/diamond/Makefile
 deleted file mode 100644
 index 93800e0..0000000

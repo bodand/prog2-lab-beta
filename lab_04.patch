@@ -1,25 +1,26 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..d80f1be
+index 0000000..1ce4a50
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,17 @@
 +HSZK-CB/*
++!HSZK-CB/cpp_lab_04.cbp
 +!HSZK-CB/Makefile
-+!HSZK-CB/cpp_labor01.cbp
 +HSZK-VS16/*
 +!HSZK-VS16/ALL_BUILD.vcxproj
 +!HSZK-VS16/ALL_BUILD.vcxproj.filters
-+!HSZK-VS16/ALL_BUILD.vcxproj.user
++!HSZK-VS16/cpp_lab_04.sln
++!HSZK-VS16/potmeter_test.vcxproj
++!HSZK-VS16/potmeter_test.vcxproj.filters
++!HSZK-VS16/resistor_test.vcxproj
++!HSZK-VS16/resistor_test.vcxproj.filters
++!HSZK-VS16/resistor_test2.vcxproj
++!HSZK-VS16/resistor_test2.vcxproj.filters
 +!HSZK-VS16/ZERO_CHECK.vcxproj
-+!HSZK-VS16/ZERO_CHECK.vcxproj.filters
-+!HSZK-VS16/cpp_labor01.sln
-+!HSZK-VS16/nagyobb.vcxproj
-+!HSZK-VS16/nagyobb.vcxproj.filters
-+!HSZK-VS16/nagyobb.vcxproj.user
 +LINUX-CB/*
++!LINUX-CB/cpp_lab_04.cbp
 +!LINUX-CB/Makefile
-+!LINUX-CB/cpp_labor01.cbp
 \ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
@@ -2605,6 +2606,217 @@ index 0000000..1a7c858
 +	"$(CMAKE_COMMAND)" -G "CodeBlocks - Unix Makefiles" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 +.PHONY : cmake_check_build_system
 +
+diff --git a/LINUX-CB/cpp_lab_04.cbp b/LINUX-CB/cpp_lab_04.cbp
+new file mode 100644
+index 0000000..0ae47d6
+--- /dev/null
++++ b/LINUX-CB/cpp_lab_04.cbp
+@@ -0,0 +1,205 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<CodeBlocks_project_file>
++	<FileVersion major="1" minor="6"/>
++	<Project>
++		<Option title="cpp_lab_04"/>
++		<Option makefile_is_custom="1"/>
++		<Option compiler="gcc"/>
++		<Option virtualFolders="CMake Files\;"/>
++		<Build>
++			<Target title="all">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 all"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="resistor_test">
++				<Option output="../LINUX-CB/resistor_test" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 resistor_test"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="resistor_test/fast">
++				<Option output="../LINUX-CB/resistor_test" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 resistor_test/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="resistor_test2">
++				<Option output="../LINUX-CB/resistor_test2" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 resistor_test2"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="resistor_test2/fast">
++				<Option output="../LINUX-CB/resistor_test2" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 resistor_test2/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="potmeter_test">
++				<Option output="../LINUX-CB/potmeter_test" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 potmeter_test"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="potmeter_test/fast">
++				<Option output="../LINUX-CB/potmeter_test" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 potmeter_test/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="edit_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 edit_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="rebuild_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++		</Build>
++		<Unit filename="../console.cpp">
++			<Option target="potmeter_test"/>
++		</Unit>
++		<Unit filename="../console.h">
++			<Option target="potmeter_test"/>
++		</Unit>
++		<Unit filename="../potmeter_teszt.cpp">
++			<Option target="potmeter_test"/>
++		</Unit>
++		<Unit filename="../resistor.cpp">
++			<Option target="resistor_test"/>
++			<Option target="resistor_test2"/>
++			<Option target="potmeter_test"/>
++		</Unit>
++		<Unit filename="../resistor.h">
++			<Option target="resistor_test"/>
++			<Option target="resistor_test2"/>
++			<Option target="potmeter_test"/>
++		</Unit>
++		<Unit filename="../resistor_test.cpp">
++			<Option target="resistor_test"/>
++		</Unit>
++		<Unit filename="../resistor_test2.cpp">
++			<Option target="resistor_test2"/>
++		</Unit>
++		<Unit filename="../CMakeLists.txt">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../generate_warnings.cmake">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++	</Project>
++</CodeBlocks_project_file>
 diff --git a/Makefile b/Makefile
 deleted file mode 100644
 index 5d9d4d6..0000000

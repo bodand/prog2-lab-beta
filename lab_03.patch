@@ -1,25 +1,39 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..d80f1be
+index 0000000..68948dd
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,30 @@
 +HSZK-CB/*
++!HSZK-CB/cpp_lab_03.cbp
++!HSZK-CB/Komplex/cpp_lab_02_komplex.cbp
++!HSZK-CB/Komplex/Makefile
 +!HSZK-CB/Makefile
-+!HSZK-CB/cpp_labor01.cbp
++!HSZK-CB/Teglalap/cpp_lab_03_teglalab.cbp
++!HSZK-CB/Teglalap/Makefile
 +HSZK-VS16/*
 +!HSZK-VS16/ALL_BUILD.vcxproj
 +!HSZK-VS16/ALL_BUILD.vcxproj.filters
-+!HSZK-VS16/ALL_BUILD.vcxproj.user
++!HSZK-VS16/cpp_lab_03.sln
++!HSZK-VS16/Komplex/ALL_BUILD.vcxproj
++!HSZK-VS16/Komplex/ALL_BUILD.vcxproj.filters
++!HSZK-VS16/Komplex/cpp_lab_02_komplex.sln
++!HSZK-VS16/Komplex/lab_02_komplex.vcxproj
++!HSZK-VS16/Komplex/lab_02_komplex.vcxproj.filters
++!HSZK-VS16/Teglalap/ALL_BUILD.vcxproj
++!HSZK-VS16/Teglalap/ALL_BUILD.vcxproj.filters
++!HSZK-VS16/Teglalap/cpp_lab_03_teglalab.sln
++!HSZK-VS16/Teglalap/lab_03_teglalap.vcxproj
++!HSZK-VS16/Teglalap/lab_03_teglalap.vcxproj.filters
 +!HSZK-VS16/ZERO_CHECK.vcxproj
 +!HSZK-VS16/ZERO_CHECK.vcxproj.filters
-+!HSZK-VS16/cpp_labor01.sln
-+!HSZK-VS16/nagyobb.vcxproj
-+!HSZK-VS16/nagyobb.vcxproj.filters
-+!HSZK-VS16/nagyobb.vcxproj.user
 +LINUX-CB/*
++!LINUX-CB/cpp_lab_03.cbp
++!LINUX-CB/Komplex/cpp_lab_02_komplex.cbp
++!LINUX-CB/Komplex/Makefile
 +!LINUX-CB/Makefile
-+!LINUX-CB/cpp_labor01.cbp
++!LINUX-CB/Teglalap/cpp_lab_03_teglalab.cbp
++!LINUX-CB/Teglalap/Makefile
 \ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
@@ -3227,6 +3241,172 @@ index 0000000..acbdf5b
 +	"$(CMAKE_COMMAND)" -G "CodeBlocks - Unix Makefiles" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 +.PHONY : cmake_check_build_system
 +
+diff --git a/LINUX-CB/cpp_lab_03.cbp b/LINUX-CB/cpp_lab_03.cbp
+new file mode 100644
+index 0000000..405af68
+--- /dev/null
++++ b/LINUX-CB/cpp_lab_03.cbp
+@@ -0,0 +1,160 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<CodeBlocks_project_file>
++	<FileVersion major="1" minor="6"/>
++	<Project>
++		<Option title="cpp_lab_03"/>
++		<Option makefile_is_custom="1"/>
++		<Option compiler="gcc"/>
++		<Option virtualFolders="CMake Files\;CMake Files\Komplex\;CMake Files\Teglalap\;"/>
++		<Build>
++			<Target title="all">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 all"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="edit_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 edit_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="rebuild_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="lab_03_teglalap">
++				<Option output="../LINUX-CB/Teglalap/lab_03_teglalap" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB/Teglalap"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 lab_03_teglalap"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="lab_03_teglalap/fast">
++				<Option output="../LINUX-CB/Teglalap/lab_03_teglalap" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB/Teglalap"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 lab_03_teglalap/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Teglalap/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="lab_02_komplex">
++				<Option output="../LINUX-CB/Komplex/lab_02_komplex" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB/Komplex"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 lab_02_komplex"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="lab_02_komplex/fast">
++				<Option output="../LINUX-CB/Komplex/lab_02_komplex" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB/Komplex"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 lab_02_komplex/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Komplex/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++		</Build>
++		<Unit filename="../Komplex/elkeszult.h">
++			<Option target="lab_02_komplex"/>
++		</Unit>
++		<Unit filename="../Komplex/gtest_lite.h">
++			<Option target="lab_02_komplex"/>
++		</Unit>
++		<Unit filename="../Komplex/komplex.cpp">
++			<Option target="lab_02_komplex"/>
++		</Unit>
++		<Unit filename="../Komplex/komplex.h">
++			<Option target="lab_02_komplex"/>
++		</Unit>
++		<Unit filename="../Komplex/komplex_teszt.cpp">
++			<Option target="lab_02_komplex"/>
++		</Unit>
++		<Unit filename="../Teglalap/teglalap.cpp">
++			<Option target="lab_03_teglalap"/>
++		</Unit>
++		<Unit filename="../CMakeLists.txt">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../generate_warnings.cmake">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../Komplex/CMakeLists.txt">
++			<Option virtualFolder="CMake Files\Komplex\"/>
++		</Unit>
++		<Unit filename="../Teglalap/CMakeLists.txt">
++			<Option virtualFolder="CMake Files\Teglalap\"/>
++		</Unit>
++	</Project>
++</CodeBlocks_project_file>
 diff --git a/Teglalap/CMakeLists.txt b/Teglalap/CMakeLists.txt
 new file mode 100644
 index 0000000..c9d5b83

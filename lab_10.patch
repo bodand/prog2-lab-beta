@@ -1,25 +1,23 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..d80f1be
+index 0000000..c2bf378
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,14 @@
 +HSZK-CB/*
++!HSZK-CB/lab_10.cbp
 +!HSZK-CB/Makefile
-+!HSZK-CB/cpp_labor01.cbp
 +HSZK-VS16/*
 +!HSZK-VS16/ALL_BUILD.vcxproj
 +!HSZK-VS16/ALL_BUILD.vcxproj.filters
-+!HSZK-VS16/ALL_BUILD.vcxproj.user
++!HSZK-VS16/lab_10.sln
++!HSZK-VS16/vektor.vcxproj
++!HSZK-VS16/vektor.vcxproj.filters
 +!HSZK-VS16/ZERO_CHECK.vcxproj
 +!HSZK-VS16/ZERO_CHECK.vcxproj.filters
-+!HSZK-VS16/cpp_labor01.sln
-+!HSZK-VS16/nagyobb.vcxproj
-+!HSZK-VS16/nagyobb.vcxproj.filters
-+!HSZK-VS16/nagyobb.vcxproj.user
 +LINUX-CB/*
++!LINUX-CB/lab_10.cbp
 +!LINUX-CB/Makefile
-+!LINUX-CB/cpp_labor01.cbp
 \ No newline at end of file
 diff --git a/CMakeLists.txt b/CMakeLists.txt
 new file mode 100644
@@ -1419,6 +1417,119 @@ index 0000000..c916a64
 +	"$(CMAKE_COMMAND)" -G "CodeBlocks - Unix Makefiles" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 +.PHONY : cmake_check_build_system
 +
+diff --git a/LINUX-CB/lab_10.cbp b/LINUX-CB/lab_10.cbp
+new file mode 100644
+index 0000000..472fb6e
+--- /dev/null
++++ b/LINUX-CB/lab_10.cbp
+@@ -0,0 +1,107 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<CodeBlocks_project_file>
++	<FileVersion major="1" minor="6"/>
++	<Project>
++		<Option title="lab_10"/>
++		<Option makefile_is_custom="1"/>
++		<Option compiler="gcc"/>
++		<Option virtualFolders="CMake Files\;"/>
++		<Build>
++			<Target title="all">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 all"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="vektor">
++				<Option output="../LINUX-CB/vektor" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 vektor"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="vektor/fast">
++				<Option output="../LINUX-CB/vektor" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 vektor/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="edit_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 edit_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="rebuild_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++		</Build>
++		<Unit filename="../compat.hpp">
++			<Option target="vektor"/>
++		</Unit>
++		<Unit filename="../gen_array_iter3.hpp">
++			<Option target="vektor"/>
++		</Unit>
++		<Unit filename="../mystack.hpp">
++			<Option target="vektor"/>
++		</Unit>
++		<Unit filename="../vektor.hpp">
++			<Option target="vektor"/>
++		</Unit>
++		<Unit filename="../vektor_test.cpp">
++			<Option target="vektor"/>
++		</Unit>
++		<Unit filename="../CMakeLists.txt">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../generate_warnings.cmake">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++	</Project>
++</CodeBlocks_project_file>
 diff --git a/Makefile b/Makefile
 deleted file mode 100644
 index cf074b2..0000000

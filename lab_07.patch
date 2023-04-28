@@ -1,25 +1,29 @@
 diff --git a/.gitignore b/.gitignore
 new file mode 100644
-index 0000000..d80f1be
+index 0000000..664e9b5
 --- /dev/null
 +++ b/.gitignore
-@@ -0,0 +1,16 @@
+@@ -0,0 +1,20 @@
 +HSZK-CB/*
++!HSZK-CB/lab_07.cbp
 +!HSZK-CB/Makefile
-+!HSZK-CB/cpp_labor01.cbp
 +HSZK-VS16/*
++!HSZK-VS16/alakzat-common.vcxproj
++!HSZK-VS16/alakzat-common.vcxproj.filters
++!HSZK-VS16/alakzat.vcxproj
++!HSZK-VS16/alakzat.vcxproj.filters
++!HSZK-VS16/alakzat_rajztabla.vcxproj
++!HSZK-VS16/alakzat_rajztabla.vcxproj.filters
 +!HSZK-VS16/ALL_BUILD.vcxproj
 +!HSZK-VS16/ALL_BUILD.vcxproj.filters
-+!HSZK-VS16/ALL_BUILD.vcxproj.user
++!HSZK-VS16/lab_07.sln
++!HSZK-VS16/memtrace.vcxproj
++!HSZK-VS16/memtrace.vcxproj.filters
 +!HSZK-VS16/ZERO_CHECK.vcxproj
 +!HSZK-VS16/ZERO_CHECK.vcxproj.filters
-+!HSZK-VS16/cpp_labor01.sln
-+!HSZK-VS16/nagyobb.vcxproj
-+!HSZK-VS16/nagyobb.vcxproj.filters
-+!HSZK-VS16/nagyobb.vcxproj.user
 +LINUX-CB/*
++!LINUX-CB/lab_07.cbp
 +!LINUX-CB/Makefile
-+!LINUX-CB/cpp_labor01.cbp
 \ No newline at end of file
 diff --git a/Alakzatlab/Makefile b/Alakzatlab/Makefile
 deleted file mode 100644
@@ -3760,6 +3764,325 @@ index 0000000..4d76a5e
 +	"$(CMAKE_COMMAND)" -G "CodeBlocks - Unix Makefiles" -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 +.PHONY : cmake_check_build_system
 +
+diff --git a/LINUX-CB/lab_07.cbp b/LINUX-CB/lab_07.cbp
+new file mode 100644
+index 0000000..4bc148a
+--- /dev/null
++++ b/LINUX-CB/lab_07.cbp
+@@ -0,0 +1,313 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<CodeBlocks_project_file>
++	<FileVersion major="1" minor="6"/>
++	<Project>
++		<Option title="lab_07"/>
++		<Option makefile_is_custom="1"/>
++		<Option compiler="gcc"/>
++		<Option virtualFolders="CMake Files\;"/>
++		<Build>
++			<Target title="all">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 all"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="memtrace">
++				<Option output="../LINUX-CB/libmemtrace.a" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="2"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 memtrace"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="memtrace/fast">
++				<Option output="../LINUX-CB/libmemtrace.a" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="2"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 memtrace/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat-common">
++				<Option output="../LINUX-CB/CMakeFiles/alakzat-common.dir/alakzat-common.objlib" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="2"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat-common"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat-common/fast">
++				<Option output="../LINUX-CB/CMakeFiles/alakzat-common.dir/alakzat-common.objlib" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="2"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat-common/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat">
++				<Option output="../LINUX-CB/alakzat" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat/fast">
++				<Option output="../LINUX-CB/alakzat" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat_rajztabla">
++				<Option output="../LINUX-CB/alakzat_rajztabla" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat_rajztabla"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="alakzat_rajztabla/fast">
++				<Option output="../LINUX-CB/alakzat_rajztabla" prefix_auto="0" extension_auto="0"/>
++				<Option working_dir="../LINUX-CB"/>
++				<Option object_output="./"/>
++				<Option type="1"/>
++				<Option compiler="gcc"/>
++				<Compiler>
++					<Add option="-DMEMTRACE"/>
++					<Add directory="/usr/include/c++/11"/>
++					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
++					<Add directory="/usr/include/c++/11/backward"/>
++					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
++					<Add directory="/usr/local/include"/>
++					<Add directory="/usr/include/x86_64-linux-gnu"/>
++					<Add directory="/usr/include"/>
++				</Compiler>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 alakzat_rajztabla/fast"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="edit_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 edit_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++			<Target title="rebuild_cache">
++				<Option working_dir="../LINUX-CB"/>
++				<Option type="4"/>
++				<MakeCommands>
++					<Build command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
++					<CompileFile command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
++					<Clean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++					<DistClean command="/usr/bin/gmake -j8 -f &quot;../LINUX-CB/Makefile&quot;  VERBOSE=1 clean"/>
++				</MakeCommands>
++			</Target>
++		</Build>
++		<Unit filename="../Alakzatlab/alakzat.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/alakzat.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/alakzat2_main.cpp">
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/alakzat_main.cpp">
++			<Option target="alakzat"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/ellipszis.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/haromszog.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/haromszog.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/kor.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/kor.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/memtrace.cpp">
++			<Option target="memtrace"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/memtrace.h">
++			<Option target="memtrace"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/pont.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/pont.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/rajztabla.cpp">
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/rajztabla.h">
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/szakasz.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/szakasz.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/szin.cpp">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../Alakzatlab/szin.h">
++			<Option target="alakzat-common"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/alakzat.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/haromszog.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/kor.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/pont.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/szakasz.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../LINUX-CB/CMakeFiles/alakzat-common.dir/Alakzatlab/szin.cpp.o">
++			<Option target="alakzat"/>
++			<Option target="alakzat_rajztabla"/>
++		</Unit>
++		<Unit filename="../CMakeLists.txt">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++		<Unit filename="../generate_warnings.cmake">
++			<Option virtualFolder="CMake Files\"/>
++		</Unit>
++	</Project>
++</CodeBlocks_project_file>
 diff --git a/README.md b/README.md
 new file mode 100644
 index 0000000..62bccca
