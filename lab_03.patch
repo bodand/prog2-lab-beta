@@ -2863,6 +2863,18 @@ index ed5dca1..0000000
 -tar:
 -	tar -czvf komplex.tgz *.h *.cpp 
 -
+diff --git a/Komplex/gtest_lite.h b/Komplex/gtest_lite.h
+index e7436c7..8a3166e 100644
+--- a/Komplex/gtest_lite.h
++++ b/Komplex/gtest_lite.h
+@@ -212,6 +212,7 @@ struct Test {
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/Komplex/komplex.cbp b/Komplex/komplex.cbp
 deleted file mode 100644
 index 5b94be7..0000000

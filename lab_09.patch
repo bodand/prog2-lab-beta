@@ -2383,6 +2383,18 @@ index 28377df..0000000
 -  </ItemGroup>
 -</Project>
 \ No newline at end of file
+diff --git a/genArray3/gtest_lite.h b/genArray3/gtest_lite.h
+index fa717f0..9bf1f60 100644
+--- a/genArray3/gtest_lite.h
++++ b/genArray3/gtest_lite.h
+@@ -225,6 +225,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/genArray3/sablonok.hpp b/genArray3/sablonok.hpp
 new file mode 100644
 index 0000000..ba876a7
@@ -2700,6 +2712,18 @@ index a5a1c90..0000000
 -  </ItemGroup>
 -</Project>
 \ No newline at end of file
+diff --git a/generikus2/gtest_lite.h b/generikus2/gtest_lite.h
+index fa717f0..9bf1f60 100644
+--- a/generikus2/gtest_lite.h
++++ b/generikus2/gtest_lite.h
+@@ -225,6 +225,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/generikus2/sablonok.hpp b/generikus2/sablonok.hpp
 new file mode 100644
 index 0000000..ba876a7

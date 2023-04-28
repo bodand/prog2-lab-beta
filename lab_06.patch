@@ -2140,6 +2140,18 @@ index 942d9f0..0000000
 diff --git a/bicikli/bicikli.h b/bicikli/bicikli.h
 new file mode 100644
 index 0000000..e69de29
+diff --git a/bicikli/gtest_lite.h b/bicikli/gtest_lite.h
+index d1e25f1..2d50283 100644
+--- a/bicikli/gtest_lite.h
++++ b/bicikli/gtest_lite.h
+@@ -278,6 +278,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/generate_warnings.cmake b/generate_warnings.cmake
 new file mode 100644
 index 0000000..2de87e5

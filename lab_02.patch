@@ -2466,6 +2466,18 @@ index 0ef834e..0000000
 -clean:
 -	rm -f $(OBJS) $(PROG)
 -
+diff --git a/string2_cpp/gtest_lite.h b/string2_cpp/gtest_lite.h
+index 4f0b860..d270ff6 100644
+--- a/string2_cpp/gtest_lite.h
++++ b/string2_cpp/gtest_lite.h
+@@ -225,6 +225,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/string2_cpp/string2.cbp b/string2_cpp/string2.cbp
 deleted file mode 100644
 index 9de7e3a..0000000

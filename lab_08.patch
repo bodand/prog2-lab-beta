@@ -2411,6 +2411,18 @@ index ecb5ecb..0000000
 -  </ItemGroup>
 -</Project>
 \ No newline at end of file
+diff --git a/halmaz/gtest_lite.h b/halmaz/gtest_lite.h
+index 77851ae..3c24e76 100644
+--- a/halmaz/gtest_lite.h
++++ b/halmaz/gtest_lite.h
+@@ -285,6 +285,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/halmaz/halmaz.cbp b/halmaz/halmaz.cbp
 deleted file mode 100644
 index 1e8f753..0000000

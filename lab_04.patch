@@ -2970,7 +2970,7 @@ index 0000000..2de87e5
 +endfunction()
 \ No newline at end of file
 diff --git a/gtest_lite.h b/gtest_lite.h
-index ee18995..c024a50 100644
+index ee18995..c9fb8fb 100644
 --- a/gtest_lite.h
 +++ b/gtest_lite.h
 @@ -199,7 +199,7 @@ struct Test {
@@ -2982,6 +2982,14 @@ index ee18995..c024a50 100644
      Test(const Test&);
      void operator=(const Test&);
  public:
+@@ -216,6 +216,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/resistor.cbp b/resistor.cbp
 deleted file mode 100644
 index c0ab322..0000000

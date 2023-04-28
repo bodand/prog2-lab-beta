@@ -1549,6 +1549,18 @@ index 0000000..2de87e5
 +    target_compile_options("${_Target}" PUBLIC ${gw_found_warnings})
 +endfunction()
 \ No newline at end of file
+diff --git a/gtest_lite.h b/gtest_lite.h
+index f18db7e..a33b2d8 100644
+--- a/gtest_lite.h
++++ b/gtest_lite.h
+@@ -269,6 +269,7 @@ public:
+     }
+     /// Teszt vége
+     std::ostream& end(bool memchk = false) {
++        (void) memchk;
+ #ifdef MEMTRACE
+         if (memchk && ablocks != memtrace::allocated_blocks()) {
+             status = false;
 diff --git a/string5.cbp b/string5.cbp
 deleted file mode 100644
 index f50375d..0000000
