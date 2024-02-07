@@ -12,7 +12,7 @@ if [ -z "$draft_id" ]; then
   echo "Draft release not found; creating..."
   jq --null-input \
     --arg tag_name "${CIRRUS_TAG}" \
-    --arg name "cg3 release ${CIRRUS_TAG}" \
+    --arg name "Release ${CIRRUS_TAG}" \
     '{"tag_name": $tag_name, "name": $name, "body": "", "generate_release_notes": false}' \
     >release-payload.json
 
