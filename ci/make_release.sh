@@ -13,7 +13,7 @@ if [ -z "$draft_id" ]; then
   jq --null-input \
     --arg tag_name "${CIRRUS_TAG}" \
     --arg name "Release ${CIRRUS_TAG}" \
-    '{"tag_name": $tag_name, "name": $name, "body": "", "generate_release_notes": false}' \
+    '{"tag_name": $tag_name, "name": $name, "body": "", "generate_release_notes": false, "draft": true}' \
     >release-payload.json
 
   curl -X POST \
