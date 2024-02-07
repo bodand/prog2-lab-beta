@@ -35,4 +35,4 @@ fi
 
 draft_id=$(jq '.[] | select(.draft).id' releases.json)
 echo "Draft id used: $draft_id"
-echo "GH_REL_ID=$draft_id" >${CIRRUS_ENV}
+echo $draft_id > draft_id

@@ -6,6 +6,7 @@ if [ -z "$type" ]; then
   type="application/octet-stream"
 fi
 
+GH_REL_ID=$(cat draft_id)
 echo "Uploading to release id ${GH_REL_ID}..."
 curl -X POST \
   -H "Accept: application/vnd.github+json" \
