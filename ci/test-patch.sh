@@ -10,3 +10,4 @@ then
 fi
 
 cmake -S. -B_build
+rm -rf _build

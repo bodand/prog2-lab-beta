@@ -22,6 +22,8 @@ unix_like_task:
         image: debian:testing-slim
         cpu: 1
         memory: 1G
+      env:
+        DEPLOY: "yes"
       install_packages_script:
         - apt update
         - apt install -y git cmake g++
@@ -136,6 +138,13 @@ unix_like_task:
   
   cpp_tar_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar 
+
+  deploy_script:
+    if [ "x${DEPLOY}" = "xyes" ]; then
+      sh ci/make_release.sh
+      find . -maxdepth 1 -type d -not -name '.' -exec zip -r {}.zip {} \;
+      find . -maxdepth 1 -type f -name '*.zip' -exec sh ci/upload-artefact.sh {} \;
+    fi
 
 
 windows_task:
