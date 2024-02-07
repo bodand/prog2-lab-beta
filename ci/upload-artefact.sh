@@ -12,5 +12,5 @@ curl -X POST \
   -H "Authorization: Bearer ${GITHUB_TOKEN}" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   -H "Content-Type: $type" \
-  "https://uploads.github.com/repos/bodand/cg3/releases/${GH_REL_ID}/assets?name=$filename" \
+  "https://uploads.github.com/repos/bodand/prog2-lab-beta/releases/${GH_REL_ID}/assets?name=$filename" \
   --data-binary "@$filename"
