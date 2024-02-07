@@ -51,13 +51,6 @@ unix_like_task:
       install_packages_script:
         - apk add git cmake g++ make
     # FreeBSD ###################################
-    - name: "FreeBSD 13.1"
-      freebsd_instance:
-        image_family: freebsd-13-1
-        cpu: 1
-        memory: 1G
-      install_packages_script:
-        - pkg install -y git cmake
     - name: "FreeBSD 14.0"
       freebsd_instance:
         image_family: freebsd-14-0-snap
