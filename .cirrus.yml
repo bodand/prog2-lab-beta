@@ -10,7 +10,7 @@ unix_like_task:
         - apt update
         - apt install -y git cmake g++
     - name: "Debian Bullseye"
-      container: 
+      container:
         image: debian:bullseye-slim
         cpu: 1
         memory: 1G
@@ -18,7 +18,7 @@ unix_like_task:
         - apt update
         - apt install -y git cmake g++
     - name: "Debian testing"
-      container: 
+      container:
         image: debian:testing-slim
         cpu: 1
         memory: 1G
@@ -80,7 +80,7 @@ unix_like_task:
 
   lab_06_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_06.git lab_06
-  
+
   lab_07_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/labor_peldak/lab_07.git lab_07
 
@@ -109,7 +109,7 @@ unix_like_task:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
 
   cpp_ember_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember 
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember
 
   cpp_hetero_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppHetero.git cpp_hetero
@@ -128,13 +128,12 @@ unix_like_task:
 
   ustring_script:
     - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/UString.git ustring
-  
+
   cpp_tar_script:
-    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar 
+    - sh ci/test-patch.sh https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar
 
   deploy_script:
     - sh ci/deploy.sh
-
 
 windows_task:
   env:
@@ -152,20 +151,12 @@ windows_task:
         - C:\tools\msys64\msys2_shell.cmd -defterm -no-start -c "pacman --noconfirm -S mingw-w64-ucrt-x86_64-gcc"
       env:
         DO_MSYS2: yes
-    - name: "Windows Server Core 2019 -- MinGW"
-      windows_container:
-        image: cirrusci/windowsservercore:2019
-      install_packages_script:
-        - choco install -y cmake
-        - choco install -y mingw
-      env:
-        DO_MINGW: yes
     - name: "Windows Server Core 2019 -- Visual Studio 17 2022"
       windows_container:
         image: cirrusci/windowsservercore:2019
       install_packages_script:
         - choco install -y cmake
-        - choco install visualstudio2022buildtools -y --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Redist.14.Latest --add Microsoft.Component.VC.Runtime.UCRTSDK --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Component.VC.ATL"
+        - choco install visualstudio2022buildtools -y --package-parameters "--add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.Component.VC.Llvm.Clang --add Microsoft.VisualStudio.Component.VC.Llvm.ClangToolset --add Microsoft.VisualStudio.Component.VC.Redist.14.Latest --add Microsoft.Component.VC.Runtime.UCRTSDK --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.Component.VC.ATL"
       env:
         DO_MSVC: yes
 
@@ -206,10 +197,10 @@ windows_task:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/ClonableHetero.git clonable_hetero
 
   cpp_ember_script:
-    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember 
-  
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppEmber.git cpp_ember
+
   cpp_tar_script:
-    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar 
+    - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppTar.git cpp_tar
 
   cpp_hetero_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/CppHetero.git cpp_hetero
@@ -228,4 +219,3 @@ windows_task:
 
   ustring_script:
     - ci\test-patch.bat https://git.ik.bme.hu/Prog2/ell_feladat/UString.git ustring
-
